@@ -113,8 +113,9 @@ newman run collections/automation-exercise-api.postman_collection.json
 **Orkhan Aliyev** — QA Engineer focused on building reliable, scalable test coverage for web applications.
 
 - 📧 mr.orkhan.aliyev@gmail.com
-- 💼 [LinkedIn](https://www.linkedin.com/in/<your-handle>)
-- 🌐 [Portfolio Site](https://<your-site>.com)
+- 💼 [LinkedIn](https://www.linkedin.com/in/orkhan-aliyev-88718939b/)
+- 🐙 [GitHub](https://github.com/mrorkhanaliyev-byte)
+- 🦊 [GitLab](https://gitlab.com/orkhanaliyev)
 
 ---
 
