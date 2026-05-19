@@ -1,4 +1,4 @@
-# E-Commerce QA Portfolio
+# QA Engineer Portfolio
 
 > End-to-end Quality Assurance portfolio demonstrating the **full QA lifecycle** on real-world e-commerce applications — from manual test design and bug reporting through API testing, database validation, and UI automation across multiple frameworks.
 
