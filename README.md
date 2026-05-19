@@ -59,7 +59,7 @@ Each automation framework has its own setup instructions in its folder. Quick st
 
 ```bash
 # Clone the repo
-git clone https://github.com/<your-username>/qa-engineer-portfolio.git
+git clone https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio.git
 cd qa-engineer-portfolio
 
 # Run Cypress tests
