@@ -22,12 +22,12 @@ This section contains the **foundation** of QA work — the artifacts a tester p
 
 | Module | Test Cases | Bugs Found |
 |---|---|---|
-| Login | TBD | TBD |
-| Registration | TBD | TBD |
-| Product Search | TBD | TBD |
-| Cart | TBD | TBD |
-| Checkout | TBD | TBD |
-| **Total** | **TBD** | **TBD** |
+| Login | 12 | 2 (BUG-001, BUG-003) |
+| Cart | 13 | 1 (BUG-002) |
+| Registration | _planned_ | — |
+| Product Search | _planned_ | — |
+| Checkout | _planned_ | — |
+| **Total (so far)** | **25** | **3** |
 
 ## How Test Cases Are Written
 
