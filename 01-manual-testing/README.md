@@ -8,7 +8,7 @@ This section contains the **foundation** of QA work — the artifacts a tester p
 |---|---|
 | [test-plan.md](./test-plan.md) | High-level test plan: scope, approach, entry/exit criteria, risks |
 | [test-strategy.md](./test-strategy.md) | Test strategy: levels, types, tools, environments |
-| [test-cases/](./test-cases/) | Detailed test cases in Excel (Login, Registration, Cart, Checkout) |
+| [test-cases/](./test-cases/) | Detailed test cases as CSV (Excel-compatible) for Login, Registration, Search, Cart, Checkout |
 | [bug-reports/](./bug-reports/) | Real bugs found during exploratory testing, with screenshots |
 | [checklists/](./checklists/) | Smoke test and regression checklists |
 | [mind-maps/](./mind-maps/) | Visual coverage maps |
@@ -23,11 +23,11 @@ This section contains the **foundation** of QA work — the artifacts a tester p
 | Module | Test Cases | Bugs Found |
 |---|---|---|
 | Login | 12 | 2 (BUG-001, BUG-003) |
+| Registration | 14 | — |
+| Product Search | 12 | — |
 | Cart | 13 | 1 (BUG-002) |
-| Registration | _planned_ | — |
-| Product Search | _planned_ | — |
-| Checkout | _planned_ | — |
-| **Total (so far)** | **25** | **3** |
+| Checkout | 14 | — |
+| **Total** | **65** | **3** |
 
 ## How Test Cases Are Written
 

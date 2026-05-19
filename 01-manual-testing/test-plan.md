@@ -28,18 +28,19 @@ This document defines the test plan for the Automation Exercise e-commerce appli
 
 | Module | Coverage |
 |---|---|
-| **Authentication** | Login, logout, error handling |
-| **Cart** | Add, remove, update quantity, persistence across sessions |
+| **Authentication** | Login, logout, error handling, basic security checks |
+| **Registration** | Signup flow, validation, duplicate handling, account deletion |
+| **Product Catalog & Search** | Search, filters (category / brand), product detail navigation |
+| **Cart** | Add, remove, quantity, persistence across sessions |
+| **Checkout & Payment** | Address, order review, payment, confirmation, invoice |
 
 ### 3.2 Out of Scope (this cycle)
 
-- Registration flow (planned for next cycle)
-- Product search & filtering (planned for next cycle)
-- Checkout & payment flow (planned for next cycle)
 - Performance / load testing
-- Penetration / security testing
+- Deep penetration testing (basic input-sanitization checks are included)
 - Localization & internationalization
 - Native mobile apps
+- Third-party integrations (analytics, recommendation engine)
 
 ### 3.3 Browsers & Environments
 

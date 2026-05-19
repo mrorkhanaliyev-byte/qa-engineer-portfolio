@@ -43,12 +43,13 @@ Each section has its own README with run instructions and screenshots.
 
 ## Highlights
 
-- **120+ manual test cases** covering login, registration, search, cart, and checkout flows
-- **25+ documented bug reports** with reproduction steps, severity, and screenshots
-- **Postman collection** with 30+ requests, environment variables, and Newman CI integration
-- **45+ automated tests** across Cypress and Playwright with Page Object Model
-- **CI/CD pipelines** via GitHub Actions running on every push
-- **SQL validation suite** verifying order totals, inventory, and referential integrity
+- **65 manual test cases** covering login, registration, search, cart, and checkout flows
+- **3 documented bug reports** with reproduction steps, severity, environment, and impact analysis
+- **Smoke + regression checklists** with P0/P1/P2 prioritization
+- **Postman collection** with environment variables and Newman CI integration *(in progress)*
+- **E2E automation** across Cypress and Playwright with the Page Object Model *(in progress)*
+- **CI/CD pipelines** via GitHub Actions running on every push *(in progress)*
+- **SQL validation suite** verifying order totals, inventory, and referential integrity *(in progress)*
 
 ---
 
