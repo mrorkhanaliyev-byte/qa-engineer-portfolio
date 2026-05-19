@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# Test artifacts
+cypress/videos/
+cypress/screenshots/
+playwright-report/
+test-results/
+allure-results/
+allure-report/
+newman-reports/*.html
+newman-reports/*.json
+
+# Java / Maven
+target/
+*.class
+.mvn/
+mvnw
+mvnw.cmd
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.swp
+.DS_Store
+
+# Environment / secrets
+.env
+.env.local
+*.env
+secrets.json
+
+# OS
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+logs/
+
+# Build outputs
+dist/
+build/
+out/
