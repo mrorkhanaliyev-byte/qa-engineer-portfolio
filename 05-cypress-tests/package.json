@@ -10,6 +10,7 @@
     "cy:run:firefox": "cypress run --browser firefox",
     "test:demoblaze": "cypress run --spec 'cypress/e2e/demoblaze/**/*.cy.js'",
     "test:automationexercise": "cypress run --spec 'cypress/e2e/automationexercise/**/*.cy.js'",
+    "test:abbbank": "cypress run --spec 'cypress/e2e/abbbank/**/*.cy.js'",
     "report:merge": "mochawesome-merge cypress/reports/*.json > cypress/reports/index.json",
     "report:generate": "marge cypress/reports/index.json -o cypress/reports/html"
   },
