@@ -6,6 +6,8 @@ yarn.lock
 # Test artifacts
 cypress/videos/
 cypress/screenshots/
+cypress/reports/
+cypress/downloads/
 playwright-report/
 test-results/
 allure-results/

@@ -1,0 +1,17 @@
+{
+  "demoblaze": {
+    "valid": {
+      "username": "qatestuser",
+      "password": "Test1234",
+      "_note": "This user must be registered on https://www.demoblaze.com/. If TC-LOGIN-002/003/005 fail with 'User does not exist', sign up this account manually first."
+    },
+    "invalidPassword": {
+      "username": "qatestuser",
+      "password": "wrong_password_xyz"
+    },
+    "nonExistent": {
+      "username": "this_user_does_not_exist_xyzabc999",
+      "password": "any_password"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "name": "qa-engineer-portfolio-cypress",
+  "version": "1.0.0",
+  "private": true,
+  "description": "End-to-end UI tests for the QA Engineer Portfolio — Demoblaze, Automation Exercise, and selected Azerbaijani production sites (ABB Bank, Tapaz).",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "cy:run:chrome": "cypress run --browser chrome",
+    "cy:run:firefox": "cypress run --browser firefox",
+    "test:demoblaze": "cypress run --spec 'cypress/e2e/demoblaze/**/*.cy.js'",
+    "test:automationexercise": "cypress run --spec 'cypress/e2e/automationexercise/**/*.cy.js'",
+    "report:merge": "mochawesome-merge cypress/reports/*.json > cypress/reports/index.json",
+    "report:generate": "marge cypress/reports/index.json -o cypress/reports/html"
+  },
+  "devDependencies": {
+    "cypress": "^13.15.0",
+    "cypress-mochawesome-reporter": "^3.8.2",
+    "mochawesome": "^7.1.3",
+    "mochawesome-merge": "^4.3.0",
+    "mochawesome-report-generator": "^6.2.0"
+  }
+}
