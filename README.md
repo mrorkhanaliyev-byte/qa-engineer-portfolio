@@ -46,7 +46,7 @@ Each section has its own README with run instructions and screenshots.
 - **65 manual test cases** covering login, registration, search, cart, and checkout flows
 - **3 documented bug reports** with reproduction steps, severity, environment, and impact analysis
 - **Smoke + regression checklists** with P0/P1/P2 prioritization
-- **Cypress E2E framework** with Page Object Model and Mochawesome reporting (1 spec live, more being added)
+- **Cypress E2E framework** with Page Object Model and Mochawesome reporting (2 specs live across 2 sites: Demoblaze + Automation Exercise, 18 test cases)
 - **GitHub Actions CI** that runs the Cypress suite on every push and PR with artifact upload on failure
 - **Postman collection** with environment variables and Newman CI integration *(in progress)*
 - **Playwright cross-browser suite** *(in progress)*

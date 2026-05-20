@@ -13,9 +13,11 @@ End-to-end UI automation built with **Cypress + JavaScript**, applying the **Pag
 | Site | Domain | Spec | Test Cases | Maps to |
 |---|---|---|---|---|
 | [Demoblaze](https://www.demoblaze.com/) | Demo e-commerce | `e2e/demoblaze/login.cy.js` | 6 (3 positive, 3 negative) | [`login-test-cases.csv`](../01-manual-testing/test-cases/login-test-cases.csv) |
+| [Automation Exercise](https://automationexercise.com/) | Demo e-commerce | `e2e/automationexercise/login.cy.js` | 12 (5 positive, 5 negative, 2 UI/security) | [`login-test-cases.csv`](../01-manual-testing/test-cases/login-test-cases.csv) |
 
 **Roadmap** (added one at a time as each is stabilized):
 
+- [x] Automation Exercise — login (12 TCs)
 - [ ] Automation Exercise — cart and checkout flows
 - [ ] Demoblaze — product browse + cart
 - [ ] ABB Bank — credit calculator (`abb_kredit_kalkulator`)
@@ -43,19 +45,23 @@ End-to-end UI automation built with **Cypress + JavaScript**, applying the **Pag
 ```
 05-cypress-tests/
 ├── cypress/
-│   ├── e2e/                       # Test specs, grouped by site
-│   │   └── demoblaze/
+│   ├── e2e/                              # Test specs, grouped by site
+│   │   ├── demoblaze/
+│   │   │   └── login.cy.js
+│   │   └── automationexercise/
 │   │       └── login.cy.js
-│   ├── fixtures/                  # Test data (users, products, etc.)
+│   ├── fixtures/                         # Test data (users, products, etc.)
 │   │   └── users.json
-│   ├── pages/                     # Page Object classes, grouped by site
-│   │   └── demoblaze/
+│   ├── pages/                            # Page Object classes, grouped by site
+│   │   ├── demoblaze/
+│   │   │   └── LoginPage.js
+│   │   └── automationexercise/
 │   │       └── LoginPage.js
 │   ├── support/
-│   │   ├── commands.js            # Custom Cypress commands (cy.expectAlert, etc.)
-│   │   └── e2e.js                 # Runs before every spec
-│   ├── reports/                   # Mochawesome HTML output (gitignored)
-│   └── screenshots/               # Failure screenshots (gitignored)
+│   │   ├── commands.js                   # Custom Cypress commands
+│   │   └── e2e.js                        # Runs before every spec
+│   ├── reports/                          # Mochawesome HTML output (gitignored)
+│   └── screenshots/                      # Failure screenshots (gitignored)
 ├── cypress.config.js
 ├── package.json
 └── README.md
@@ -108,7 +114,8 @@ npm install                # First time only
 npm run cy:open            # Interactive runner — best for development
 npm run cy:run             # Headless
 
-npm run test:demoblaze     # Only Demoblaze specs
+npm run test:demoblaze          # Only Demoblaze specs
+npm run test:automationexercise # Only Automation Exercise specs
 npx cypress run --spec "cypress/e2e/demoblaze/login.cy.js"  # Single file
 ```
 
@@ -125,16 +132,25 @@ npm run report:merge && npm run report:generate
 
 ## Preconditions for Some Tests
 
-`TC-LOGIN-002`, `003`, and `005` require a **registered user** on demoblaze.com.
+A few positive-path tests need a **pre-registered user** on each site.
 
-If those tests fail with `User does not exist`:
+### Demoblaze
+`TC-LOGIN-002`, `003`, and `005` — if they fail with `User does not exist`:
 
 1. Open https://www.demoblaze.com/
 2. Click **Sign up**
 3. Username: `qatestuser` | Password: `Test1234`
-4. Re-run the spec
 
-This is intentional — credentials live in [`fixtures/users.json`](./cypress/fixtures/users.json) where they can be swapped without touching any spec.
+### Automation Exercise
+`TC-AE-LOGIN-002`, `003`, `009`, and `010` — if they fail with `Your email or password is incorrect!`:
+
+1. Open https://automationexercise.com/login
+2. On the **New User Signup!** form, register:
+   - Name: `Orkhan QA`
+   - Email: `qa_orkhan@test.com`
+3. On the account info page, set Password: `Test@1234` + fill any valid data for the rest
+
+Credentials live in [`fixtures/users.json`](./cypress/fixtures/users.json) — change them in one place to swap accounts.
 
 ---
 
