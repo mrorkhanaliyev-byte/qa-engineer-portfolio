@@ -21,6 +21,11 @@
 
 import loginPage from '../../pages/automationexercise/LoginPage'
 
+// Auth-dependent tests require a pre-registered user on automationexercise.com.
+// In CI we can't create that user, so we skip them via Cypress env var.
+// Locally, leave CI_SKIP_AUTH_TESTS unset to run the full suite.
+const itIfAuth = Cypress.env('CI_SKIP_AUTH_TESTS') ? it.skip : it
+
 describe('Automation Exercise — Login Flow', () => {
   let users
 
@@ -47,25 +52,25 @@ describe('Automation Exercise — Login Flow', () => {
       .and('contain', 'Login')
   })
 
-  it('TC-AE-LOGIN-002 | Positive | Valid credentials log the user in', () => {
+  itIfAuth('TC-AE-LOGIN-002 | Positive | Valid credentials log the user in', () => {
     loginPage
       .loginAs(users.valid.email, users.valid.password)
       .assertLoggedInAs()
   })
 
-  it('TC-AE-LOGIN-003 | Positive | Header shows "Logged in as <name>" after login', () => {
+  itIfAuth('TC-AE-LOGIN-003 | Positive | Header shows "Logged in as <name>" after login', () => {
     loginPage
       .loginAs(users.valid.email, users.valid.password)
       .assertLoggedInAs(users.valid.name)
   })
 
-  it('TC-AE-LOGIN-009 | Positive | Email field is case-insensitive', () => {
+  itIfAuth('TC-AE-LOGIN-009 | Positive | Email field is case-insensitive', () => {
     loginPage
       .loginAs(users.valid.email.toUpperCase(), users.valid.password)
       .assertLoggedInAs()
   })
 
-  it('TC-AE-LOGIN-010 | Positive | Logout returns the user to a guest state', () => {
+  itIfAuth('TC-AE-LOGIN-010 | Positive | Logout returns the user to a guest state', () => {
     loginPage
       .loginAs(users.valid.email, users.valid.password)
       .assertLoggedInAs()

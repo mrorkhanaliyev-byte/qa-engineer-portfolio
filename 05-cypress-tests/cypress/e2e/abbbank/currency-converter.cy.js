@@ -11,9 +11,7 @@
 //   - HTTP-level checks for the homepage and a non-existent path
 // ============================================================
 
-import currencyPage, {
-  default as CurrencyConverterPage,
-} from '../../pages/abbbank/CurrencyConverterPage'
+import currencyPage from '../../pages/abbbank/CurrencyConverterPage'
 
 describe('ABB Bank — Currency Converter / Rates', () => {
   // ----------------------------------------------------------
@@ -63,11 +61,11 @@ describe('ABB Bank — Currency Converter / Rates', () => {
 
   describe('HTTP-level checks', () => {
     it('TC-CONV-007 | Positive | Bank homepage returns HTTP 200', () => {
-      CurrencyConverterPage.requestStatus('/').should('eq', 200)
+      currencyPage.requestStatus('/').should('eq', 200)
     })
 
     it('TC-CONV-008 | Negative | Non-existent currency page returns HTTP 404', () => {
-      CurrencyConverterPage.requestStatus('/valyuta/bilinmeyen').should('eq', 404)
+      currencyPage.requestStatus('/valyuta/bilinmeyen').should('eq', 404)
     })
   })
 })

@@ -109,8 +109,11 @@ class CurrencyConverterPage {
 
   /**
    * Fetch a URL and resolve with the HTTP status. Caller asserts.
+   * Note: instance method (not static) because we export the
+   * singleton instance from this module — static methods would
+   * not be accessible through that instance.
    */
-  static requestStatus(path = '/') {
+  requestStatus(path = '/') {
     return cy
       .request({
         url: `https://abb-bank.az${path}`,

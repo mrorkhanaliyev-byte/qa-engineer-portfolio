@@ -41,6 +41,12 @@ jobs:
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
+        env:
+          # Tests that require a pre-registered user on demoblaze.com
+          # or automationexercise.com cannot run in CI (we have no way
+          # to provision those accounts here). They are tagged with
+          # itIfAuth(...) in the specs and skipped when this is set.
+          CYPRESS_CI_SKIP_AUTH_TESTS: 'true'
         with:
           working-directory: 05-cypress-tests
           browser: ${{ matrix.browser }}

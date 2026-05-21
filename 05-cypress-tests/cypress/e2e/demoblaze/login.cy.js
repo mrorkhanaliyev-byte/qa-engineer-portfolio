@@ -17,6 +17,11 @@
 
 import loginPage from '../../pages/demoblaze/LoginPage'
 
+// Auth-dependent tests require a pre-registered user on demoblaze.com.
+// In CI we can't create that user, so we skip them via Cypress env var.
+// Locally, leave CI_SKIP_AUTH_TESTS unset to run the full suite.
+const itIfAuth = Cypress.env('CI_SKIP_AUTH_TESTS') ? it.skip : it
+
 describe('Demoblaze — Login Flow', () => {
   let users
 
@@ -42,13 +47,13 @@ describe('Demoblaze — Login Flow', () => {
       .and('contain', 'Log in')
   })
 
-  it('TC-LOGIN-002 | Positive | Valid credentials log the user in', () => {
+  itIfAuth('TC-LOGIN-002 | Positive | Valid credentials log the user in', () => {
     loginPage
       .loginAs(users.valid.username, users.valid.password)
       .assertLoggedInAs()
   })
 
-  it('TC-LOGIN-003 | Positive | Navbar shows "Welcome <username>" after login', () => {
+  itIfAuth('TC-LOGIN-003 | Positive | Navbar shows "Welcome <username>" after login', () => {
     loginPage
       .loginAs(users.valid.username, users.valid.password)
       .assertLoggedInAs(users.valid.username)

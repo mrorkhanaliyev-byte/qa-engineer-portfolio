@@ -150,6 +150,16 @@ npm run report:merge && npm run report:generate
 ## Preconditions for Some Tests
 
 A few positive-path tests need a **pre-registered user** on each site.
+These tests are tagged with `itIfAuth(...)` in the specs — controlled
+by the `CYPRESS_CI_SKIP_AUTH_TESTS` env var.
+
+- **CI**: env var is set to `true` in `.github/workflows/cypress.yml`,
+  so auth-dependent tests are auto-skipped and CI stays green.
+- **Locally**: env var is unset by default → all tests run. If you
+  haven't registered the accounts below, run with the env var set:
+  ```bash
+  CYPRESS_CI_SKIP_AUTH_TESTS=true npm run cy:run
+  ```
 
 ### Demoblaze
 `TC-LOGIN-002`, `003`, and `005` — if they fail with `User does not exist`:
