@@ -1,7 +1,9 @@
 # Dependencies
 node_modules/
-package-lock.json
-yarn.lock
+
+# Lockfiles ARE committed for CI reproducibility.
+# (Removed yarn.lock / pnpm-lock.yaml from gitignore intentionally —
+# CI's setup-node cache requires a lockfile to be tracked.)
 
 # Test artifacts
 cypress/videos/

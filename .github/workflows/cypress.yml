@@ -37,14 +37,16 @@ jobs:
         with:
           node-version: '20'
           cache: 'npm'
-          cache-dependency-path: 05-cypress-tests/package.json
+          cache-dependency-path: 05-cypress-tests/package-lock.json
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
           working-directory: 05-cypress-tests
           browser: ${{ matrix.browser }}
-          install-command: npm install
+          # npm ci is stricter than npm install — fails fast if the
+          # lockfile and package.json drift apart. Right call for CI.
+          install-command: npm ci
           # NOTE: Some demoblaze.com test cases require a pre-registered
           # user. If those fail in CI, see PRECONDITION notes in
           # cypress/e2e/demoblaze/login.cy.js — register the user once
