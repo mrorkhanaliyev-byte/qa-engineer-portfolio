@@ -2,6 +2,8 @@
 
 End-to-end UI automation built with **Cypress + JavaScript**, applying the **Page Object Model** to keep specs readable and maintainable.
 
+[![Cypress E2E](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/cypress.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/cypress.yml)
+
 ![Cypress](https://img.shields.io/badge/Cypress-13.x-17202C?logo=cypress&logoColor=white)
 ![Node](https://img.shields.io/badge/Node-20.x-339933?logo=node.js&logoColor=white)
 ![CI](https://img.shields.io/badge/CI-GitHub_Actions-2088FF?logo=githubactions&logoColor=white)
