@@ -16,6 +16,7 @@ allure-results/
 allure-report/
 newman-reports/*.html
 newman-reports/*.json
+newman-reports/*.xml
 
 # Java / Maven
 target/

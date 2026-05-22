@@ -3,6 +3,7 @@
 > End-to-end Quality Assurance portfolio demonstrating the **full QA lifecycle** on real-world e-commerce applications — from manual test design and bug reporting through API testing, database validation, and UI automation across multiple frameworks.
 
 [![Cypress E2E](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/cypress.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/cypress.yml)
+[![Newman API](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml)
 
 ![Manual Testing](https://img.shields.io/badge/Manual_Testing-✓-success)
 ![Jira](https://img.shields.io/badge/Jira-0052CC?logo=jira&logoColor=white)
@@ -49,8 +50,8 @@ Each section has its own README with run instructions and screenshots.
 - **3 documented bug reports** with reproduction steps, severity, environment, and impact analysis
 - **Smoke + regression checklists** with P0/P1/P2 prioritization
 - **Cypress E2E framework** with Page Object Model and Mochawesome reporting — 5 specs across 4 sites (Demoblaze, Automation Exercise, ABB Bank, Tap.az), **42 test cases** including real Azerbaijani banking and e-commerce production sites
-- **GitHub Actions CI** that runs the Cypress suite on every push and PR with artifact upload on failure
-- **Postman collection** with environment variables and Newman CI integration *(in progress)*
+- **Postman + Newman API suite** — full coverage of Automation Exercise's 14 documented endpoints (45+ assertions), with a chained user-lifecycle scenario that cleans up after itself
+- **GitHub Actions CI** runs both the Cypress suite and the Newman suite on every push, uploads HTML reports as artifacts, and shows live green badges in this README
 - **Playwright cross-browser suite** *(in progress)*
 - **SQL validation suite** verifying order totals, inventory, and referential integrity *(in progress)*
 

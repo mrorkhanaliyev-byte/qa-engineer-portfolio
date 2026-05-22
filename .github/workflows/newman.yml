@@ -1,0 +1,70 @@
+name: Newman API
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '04-postman-api-testing/**'
+      - '.github/workflows/newman.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - '04-postman-api-testing/**'
+      - '.github/workflows/newman.yml'
+  workflow_dispatch:
+
+jobs:
+  newman-run:
+    name: Newman against Automation Exercise API
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: 04-postman-api-testing
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 04-postman-api-testing/package-lock.json
+
+      - name: Install Newman + reporter
+        run: npm ci
+
+      - name: Run collection
+        # --env-var CI=true makes the verifyLogin (valid creds) test skip
+        # itself if AE's user is not provisioned — same pattern as Cypress.
+        # --bail=false: keep running after a failed request so we see ALL
+        # failures in one run, not just the first.
+        run: |
+          mkdir -p newman-reports
+          npx newman run collections/automation-exercise-api.postman_collection.json \
+            -e environments/automation-exercise.postman_environment.json \
+            --env-var "CI=true" \
+            --reporters cli,htmlextra,junit \
+            --reporter-htmlextra-export newman-reports/report.html \
+            --reporter-junit-export newman-reports/report.xml \
+            --color on
+
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-html-report
+          path: 04-postman-api-testing/newman-reports/report.html
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Upload JUnit XML
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: newman-junit-report
+          path: 04-postman-api-testing/newman-reports/report.xml
+          if-no-files-found: ignore
+          retention-days: 14

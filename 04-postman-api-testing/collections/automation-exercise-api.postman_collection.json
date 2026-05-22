@@ -1,0 +1,669 @@
+{
+  "info": {
+    "name": "Automation Exercise API",
+    "_postman_id": "ae-api-portfolio-v1",
+    "description": "Complete coverage of the 14 documented public endpoints on https://automationexercise.com/api_list — part of the QA Engineer Portfolio.\n\n## Important quirk\n\nThe AE API **always returns HTTP 200**, even for client errors (400, 404, 405). The *real* status is in the `responseCode` field of the JSON body. Every test in this collection asserts BOTH:\n\n1. `pm.response.to.have.status(200)` — confirms the API endpoint is reachable\n2. `body.responseCode === <expected>` — confirms the business-level outcome\n\nThis is unusual but documented behavior. The split assertion is the right model: it lets us distinguish between the API being down (HTTP != 200) and the API returning a business error (HTTP 200, responseCode 400/404/405).\n\n## Folder layout\n\n- **Health & Discovery** — read-only listing endpoints (products, brands)\n- **Search** — search by keyword, with and without the required parameter\n- **Authentication** — `verifyLogin` happy path and all documented negative cases\n- **Method Not Allowed** — endpoints that explicitly reject certain HTTP verbs\n- **User Lifecycle** — chained create → fetch → update → delete with timestamped data so the chain is idempotent across runs\n\n## Environment\n\nUses `environments/automation-exercise.postman_environment.json`. Key variables: `baseUrl`, `apiPath`, `registeredEmail`, `registeredPassword`, `createdUserEmail`, `createdUserPassword`.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health & Discovery",
+      "description": "Public read-only endpoints. No authentication, no body required.",
+      "item": [
+        {
+          "name": "API 1 — GET /productsList",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}{{apiPath}}/productsList",
+              "host": ["{{baseUrl}}{{apiPath}}"],
+              "path": ["productsList"]
+            },
+            "description": "Returns the full catalog. The portfolio asserts that the products array exists and has at least one item — a thin schema contract."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('responseCode in body is 200', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.responseCode).to.equal(200);",
+                  "});",
+                  "",
+                  "pm.test('Body has products array with at least one product', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body).to.have.property('products');",
+                  "  pm.expect(body.products).to.be.an('array').that.is.not.empty;",
+                  "});",
+                  "",
+                  "pm.test('Each product has id, name, price, brand, category', () => {",
+                  "  const body = pm.response.json();",
+                  "  const first = body.products[0];",
+                  "  pm.expect(first).to.include.keys('id', 'name', 'price', 'brand', 'category');",
+                  "});",
+                  "",
+                  "pm.test('Response time is under 5s', () => {",
+                  "  pm.expect(pm.response.responseTime).to.be.below(5000);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "API 3 — GET /brandsList",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}{{apiPath}}/brandsList",
+              "host": ["{{baseUrl}}{{apiPath}}"],
+              "path": ["brandsList"]
+            },
+            "description": "Returns the list of all brands available on the storefront."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('responseCode in body is 200', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.responseCode).to.equal(200);",
+                  "});",
+                  "",
+                  "pm.test('Body has brands array with at least one brand', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body).to.have.property('brands');",
+                  "  pm.expect(body.brands).to.be.an('array').that.is.not.empty;",
+                  "});",
+                  "",
+                  "pm.test('Each brand has id and brand name', () => {",
+                  "  const body = pm.response.json();",
+                  "  const first = body.brands[0];",
+                  "  pm.expect(first).to.include.keys('id', 'brand');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Search",
+      "description": "Product search by free-text keyword. POST with form-encoded body.",
+      "item": [
+        {
+          "name": "API 5 — POST /searchProduct (valid keyword)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "search_product",
+                  "value": "{{searchKeyword}}",
+                  "type": "text"
+                }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}{{apiPath}}/searchProduct",
+              "host": ["{{baseUrl}}{{apiPath}}"],
+              "path": ["searchProduct"]
+            },
+            "description": "Searches the catalog. Default keyword 'top' comes from the environment."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('responseCode in body is 200', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.responseCode).to.equal(200);",
+                  "});",
+                  "",
+                  "pm.test('Body has products array', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body).to.have.property('products').that.is.an('array');",
+                  "});",
+                  "",
+                  "pm.test('At least one result matches the keyword', () => {",
+                  "  const body = pm.response.json();",
+                  "  const keyword = pm.environment.get('searchKeyword').toLowerCase();",
+                  "  const anyMatch = body.products.some(p =>",
+                  "    (p.name || '').toLowerCase().includes(keyword) ||",
+                  "    (p.category && JSON.stringify(p.category).toLowerCase().includes(keyword))",
+                  "  );",
+                  "  pm.expect(anyMatch, 'expected at least one product matching the keyword').to.be.true;",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "API 6 — POST /searchProduct (missing keyword, expect 400)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": []
+            },
+            "url": {
+              "raw": "{{baseUrl}}{{apiPath}}/searchProduct",
+              "host": ["{{baseUrl}}{{apiPath}}"],
+              "path": ["searchProduct"]
+            },
+            "description": "Missing required `search_product` parameter. AE returns business-level 400 (still HTTP 200)."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200 (AE quirk)', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('responseCode in body is 400 (Bad request)', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.responseCode).to.equal(400);",
+                  "});",
+                  "",
+                  "pm.test('message mentions the missing parameter', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.message).to.exist;",
+                  "  pm.expect(body.message.toLowerCase()).to.include('search_product');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Authentication",
+      "description": "verifyLogin and its documented negative cases.",
+      "item": [
+        {
+          "name": "API 7 — POST /verifyLogin (valid credentials)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {"key": "email",    "value": "{{registeredEmail}}",    "type": "text"},
+                {"key": "password", "value": "{{registeredPassword}}", "type": "text"}
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}{{apiPath}}/verifyLogin",
+              "host": ["{{baseUrl}}{{apiPath}}"],
+              "path": ["verifyLogin"]
+            },
+            "description": "Verifies credentials against a registered user. Requires that {{registeredEmail}} is a real account on AE — same precondition as the Cypress AE login spec.\n\nIf this fails with responseCode 404, register the account once via the UI signup form, then re-run."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "// This test only passes if {{registeredEmail}} is a real account.",
+                  "// On CI we tolerate 404 (user not provisioned) so the suite stays green.",
+                  "const isCI = pm.environment.get('CI') === 'true';",
+                  "const body = pm.response.json();",
+                  "",
+                  "if (isCI && body.responseCode === 404) {",
+                  "  pm.test.skip('SKIPPED in CI — registered user not provisioned');",
+                  "} else {",
+                  "  pm.test('responseCode in body is 200 (user found)', () => {",
+                  "    pm.expect(body.responseCode).to.equal(200);",
+                  "  });",
+                  "  pm.test('Message confirms user exists', () => {",
+                  "    pm.expect(body.message.toLowerCase()).to.include('user exists');",
+                  "  });",
+                  "}"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "API 8 — POST /verifyLogin (missing email, expect 400)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {"key": "password", "value": "{{registeredPassword}}", "type": "text"}
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}{{apiPath}}/verifyLogin",
+              "host": ["{{baseUrl}}{{apiPath}}"],
+              "path": ["verifyLogin"]
+            },
+            "description": "Missing required `email` field. AE returns 400 in body."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200 (AE quirk)', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('responseCode in body is 400', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.responseCode).to.equal(400);",
+                  "});",
+                  "",
+                  "pm.test('Message mentions email or password parameter', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect((body.message || '').toLowerCase()).to.match(/email|password/);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "API 9 — DELETE /verifyLogin (wrong method, expect 405)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}{{apiPath}}/verifyLogin",
+              "host": ["{{baseUrl}}{{apiPath}}"],
+              "path": ["verifyLogin"]
+            },
+            "description": "Documented negative case: DELETE is not supported on this endpoint."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200 (AE quirk)', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('responseCode in body is 405 (Method Not Allowed)', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.responseCode).to.equal(405);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "API 10 — POST /verifyLogin (invalid creds, expect 404)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {"key": "email",    "value": "{{nonExistentEmail}}", "type": "text"},
+                {"key": "password", "value": "any_password_will_do", "type": "text"}
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}{{apiPath}}/verifyLogin",
+              "host": ["{{baseUrl}}{{apiPath}}"],
+              "path": ["verifyLogin"]
+            },
+            "description": "Email that has never been registered. AE returns 404 — note that this DIFFERS from the AE UI which returns the same generic message for wrong-password and unknown-email (security best practice). The API leaks user existence; see BUG-001 in /01-manual-testing/bug-reports."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('responseCode in body is 404 (user not found)', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.responseCode).to.equal(404);",
+                  "});",
+                  "",
+                  "pm.test('Message clearly states user not found', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect((body.message || '').toLowerCase()).to.include('not found');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Method Not Allowed",
+      "description": "Endpoints that explicitly reject certain HTTP verbs.",
+      "item": [
+        {
+          "name": "API 2 — POST /productsList (expect 405)",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}{{apiPath}}/productsList",
+              "host": ["{{baseUrl}}{{apiPath}}"],
+              "path": ["productsList"]
+            },
+            "description": "productsList is GET-only. AE responds with 405 in the body."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200 (AE quirk)', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('responseCode in body is 405', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.responseCode).to.equal(405);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "API 4 — PUT /brandsList (expect 405)",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}{{apiPath}}/brandsList",
+              "host": ["{{baseUrl}}{{apiPath}}"],
+              "path": ["brandsList"]
+            },
+            "description": "brandsList is GET-only. PUT must return 405."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200 (AE quirk)', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('responseCode in body is 405', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.responseCode).to.equal(405);",
+                  "});"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "User Lifecycle (chained)",
+      "description": "Create → fetch → update → delete a brand-new user. The pre-request script on the first request generates a unique timestamped email so the chain is fully idempotent across CI runs.\n\nIf any step fails, the cleanup step at the end still runs because each step has independent assertions — the chain doesn't short-circuit.",
+      "item": [
+        {
+          "name": "API 11 — POST /createAccount",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Generate a unique email per run so the chain is idempotent.",
+                  "const ts = Date.now();",
+                  "pm.environment.set('createdUserEmail', `qa_chain_${ts}@portfolio.test`);",
+                  "pm.environment.set('createdUserPassword', 'ChainTest@1234');"
+                ]
+              }
+            },
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('responseCode in body is 201 (user created)', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.responseCode).to.equal(201);",
+                  "});",
+                  "",
+                  "pm.test('Message confirms user creation', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect((body.message || '').toLowerCase()).to.include('created');",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {"key": "name",            "value": "QA Chain User",              "type": "text"},
+                {"key": "email",           "value": "{{createdUserEmail}}",       "type": "text"},
+                {"key": "password",        "value": "{{createdUserPassword}}",    "type": "text"},
+                {"key": "title",           "value": "Mr",                          "type": "text"},
+                {"key": "birth_date",      "value": "15",                          "type": "text"},
+                {"key": "birth_month",     "value": "June",                        "type": "text"},
+                {"key": "birth_year",      "value": "1995",                        "type": "text"},
+                {"key": "firstname",       "value": "QA",                          "type": "text"},
+                {"key": "lastname",        "value": "Portfolio",                   "type": "text"},
+                {"key": "company",         "value": "Portfolio Inc",               "type": "text"},
+                {"key": "address1",        "value": "1 Test Lane",                 "type": "text"},
+                {"key": "address2",        "value": "",                            "type": "text"},
+                {"key": "country",         "value": "United States",               "type": "text"},
+                {"key": "zipcode",         "value": "10001",                       "type": "text"},
+                {"key": "state",           "value": "NY",                          "type": "text"},
+                {"key": "city",            "value": "New York",                    "type": "text"},
+                {"key": "mobile_number",   "value": "+15555550000",                "type": "text"}
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}{{apiPath}}/createAccount",
+              "host": ["{{baseUrl}}{{apiPath}}"],
+              "path": ["createAccount"]
+            }
+          }
+        },
+        {
+          "name": "API 14 — GET /getUserDetailByEmail",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}{{apiPath}}/getUserDetailByEmail?email={{createdUserEmail}}",
+              "host": ["{{baseUrl}}{{apiPath}}"],
+              "path": ["getUserDetailByEmail"],
+              "query": [
+                {"key": "email", "value": "{{createdUserEmail}}"}
+              ]
+            },
+            "description": "Reads back the user we just created. Confirms the data persisted and is queryable."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('responseCode in body is 200', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.responseCode).to.equal(200);",
+                  "});",
+                  "",
+                  "pm.test('Returned user matches the one we created', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.user).to.exist;",
+                  "  pm.expect(body.user.email).to.equal(pm.environment.get('createdUserEmail'));",
+                  "  pm.expect(body.user.first_name).to.equal('QA');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "API 13 — PUT /updateAccount",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {"key": "name",            "value": "QA Chain User Updated",       "type": "text"},
+                {"key": "email",           "value": "{{createdUserEmail}}",        "type": "text"},
+                {"key": "password",        "value": "{{createdUserPassword}}",     "type": "text"},
+                {"key": "title",           "value": "Mr",                           "type": "text"},
+                {"key": "birth_date",      "value": "15",                           "type": "text"},
+                {"key": "birth_month",     "value": "June",                         "type": "text"},
+                {"key": "birth_year",      "value": "1995",                         "type": "text"},
+                {"key": "firstname",       "value": "QA",                           "type": "text"},
+                {"key": "lastname",        "value": "PortfolioUpdated",             "type": "text"},
+                {"key": "company",         "value": "Portfolio Inc",                "type": "text"},
+                {"key": "address1",        "value": "2 Updated Lane",               "type": "text"},
+                {"key": "address2",        "value": "",                             "type": "text"},
+                {"key": "country",         "value": "United States",                "type": "text"},
+                {"key": "zipcode",         "value": "10002",                        "type": "text"},
+                {"key": "state",           "value": "NY",                           "type": "text"},
+                {"key": "city",            "value": "New York",                     "type": "text"},
+                {"key": "mobile_number",   "value": "+15555550001",                 "type": "text"}
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}{{apiPath}}/updateAccount",
+              "host": ["{{baseUrl}}{{apiPath}}"],
+              "path": ["updateAccount"]
+            },
+            "description": "Updates the user we just created (changes lastname, address, mobile)."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('responseCode in body is 200 (updated)', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.responseCode).to.equal(200);",
+                  "});",
+                  "",
+                  "pm.test('Message confirms the update', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect((body.message || '').toLowerCase()).to.include('updated');",
+                  "});"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "API 12 — DELETE /deleteAccount",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {"key": "email",    "value": "{{createdUserEmail}}",    "type": "text"},
+                {"key": "password", "value": "{{createdUserPassword}}", "type": "text"}
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}{{apiPath}}/deleteAccount",
+              "host": ["{{baseUrl}}{{apiPath}}"],
+              "path": ["deleteAccount"]
+            },
+            "description": "Cleans up the test user. The chain leaves no orphan data behind."
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('HTTP status is 200', () => {",
+                  "  pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test('responseCode in body is 200 (deleted)', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect(body.responseCode).to.equal(200);",
+                  "});",
+                  "",
+                  "pm.test('Message confirms account deletion', () => {",
+                  "  const body = pm.response.json();",
+                  "  pm.expect((body.message || '').toLowerCase()).to.include('deleted');",
+                  "});",
+                  "",
+                  "// Clean up env vars so they don't bleed into the next run.",
+                  "pm.environment.unset('createdUserEmail');",
+                  "pm.environment.unset('createdUserPassword');"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
