@@ -1,0 +1,16 @@
+user_id|email|order_id|created_at|total|lifetime_running_total
+1|orkhan@test.az|1|1714100000|100.0|100.0
+1|orkhan@test.az|2|1714300000|60.0|160.0
+2|nigar@test.az|3|1714400000|45.0|45.0
+3|rashad@test.az|4|1714450000|38.0|38.0
+3|rashad@test.az|5|1714500000|144.0|182.0
+5|james@test.us|6|1714600000|110.0|110.0
+6|emma@test.us|7|1714700000|90.0|90.0
+7|oliver@test.uk|8|1714750000|84.0|84.0
+9|lukas@test.de|9|1714800000|65.0|65.0
+10|anna@test.de|10|1714850000|175.0|175.0
+11|tural@test.az|11|1714900000|50.0|50.0
+13|will@test.uk|12|1714950000|75.0|75.0
+15|maria@test.us|13|1715000000|42.0|42.0
+16|farid@test.az|14|1715050000|88.0|88.0
+17|lisa@test.uk|15|1715150000|55.0|55.0

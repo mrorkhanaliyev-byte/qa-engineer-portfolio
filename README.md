@@ -4,6 +4,7 @@
 
 [![Cypress E2E](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/cypress.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/cypress.yml)
 [![Newman API](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml)
+[![SQL Queries](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/sql.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/sql.yml)
 
 ![Manual Testing](https://img.shields.io/badge/Manual_Testing-✓-success)
 ![Jira](https://img.shields.io/badge/Jira-0052CC?logo=jira&logoColor=white)
@@ -51,9 +52,9 @@ Each section has its own README with run instructions and screenshots.
 - **Smoke + regression checklists** with P0/P1/P2 prioritization
 - **Cypress E2E framework** with Page Object Model and Mochawesome reporting — 5 specs across 4 sites (Demoblaze, Automation Exercise, ABB Bank, Tap.az), **42 test cases** including real Azerbaijani banking and e-commerce production sites
 - **Postman + Newman API suite** — full coverage of Automation Exercise's 14 documented endpoints (45+ assertions), with a chained user-lifecycle scenario that cleans up after itself
-- **GitHub Actions CI** runs both the Cypress suite and the Newman suite on every push, uploads HTML reports as artifacts, and shows live green badges in this README
+- **SQL validation suite** — SQLite e-commerce schema, 19 queries (basic / joins / subqueries / window functions / QA validation), 5 intentionally planted data-quality bugs that the validation queries surface, runs in <10s
+- **GitHub Actions CI** runs Cypress, Newman, AND SQL suites on every push, uploads reports as artifacts, and shows three live green badges in this README
 - **Playwright cross-browser suite** *(in progress)*
-- **SQL validation suite** verifying order totals, inventory, and referential integrity *(in progress)*
 
 ---
 

@@ -1,0 +1,40 @@
+name: SQL Queries
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '03-sql-queries/**'
+      - '.github/workflows/sql.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - '03-sql-queries/**'
+      - '.github/workflows/sql.yml'
+  workflow_dispatch:
+
+jobs:
+  sql-validate:
+    name: Validate every query against expected output
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: 03-sql-queries
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Show sqlite3 version
+        # Useful for debugging if a syntax difference ever surfaces
+        # between local dev sqlite and the runner.
+        run: python -c "import sqlite3; print('sqlite3', sqlite3.sqlite_version)"
+
+      - name: Run query test harness
+        run: python scripts/run_all_queries.py

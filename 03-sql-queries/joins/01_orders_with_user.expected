@@ -1,0 +1,16 @@
+order_id|status|total|customer_email|country
+1|delivered|100.0|orkhan@test.az|Azerbaijan
+2|delivered|60.0|orkhan@test.az|Azerbaijan
+3|shipped|45.0|nigar@test.az|Azerbaijan
+4|paid|38.0|rashad@test.az|Azerbaijan
+5|delivered|144.0|rashad@test.az|Azerbaijan
+6|delivered|110.0|james@test.us|USA
+7|pending|90.0|emma@test.us|USA
+8|shipped|84.0|oliver@test.uk|UK
+9|cancelled|65.0|lukas@test.de|Germany
+10|delivered|175.0|anna@test.de|Germany
+11|paid|50.0|tural@test.az|Azerbaijan
+12|delivered|75.0|will@test.uk|UK
+13|shipped|42.0|maria@test.us|USA
+14|delivered|88.0|farid@test.az|Azerbaijan
+15|paid|55.0|lisa@test.uk|UK
