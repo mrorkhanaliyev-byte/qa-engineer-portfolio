@@ -3,6 +3,7 @@
 > End-to-end Quality Assurance portfolio demonstrating the **full QA lifecycle** on real-world e-commerce applications — from manual test design and bug reporting through API testing, database validation, and UI automation across multiple frameworks.
 
 [![Cypress E2E](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/cypress.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/cypress.yml)
+[![Playwright Cross-Browser](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/playwright.yml)
 [![Newman API](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml)
 [![SQL Queries](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/sql.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/sql.yml)
 
@@ -53,8 +54,8 @@ Each section has its own README with run instructions and screenshots.
 - **Cypress E2E framework** with Page Object Model and Mochawesome reporting — 5 specs across 4 sites (Demoblaze, Automation Exercise, ABB Bank, Tap.az), **42 test cases** including real Azerbaijani banking and e-commerce production sites
 - **Postman + Newman API suite** — full coverage of Automation Exercise's 14 documented endpoints (45+ assertions), with a chained user-lifecycle scenario that cleans up after itself
 - **SQL validation suite** — SQLite e-commerce schema, 19 queries (basic / joins / subqueries / window functions / QA validation), 5 intentionally planted data-quality bugs that the validation queries surface, runs in <10s
-- **GitHub Actions CI** runs Cypress, Newman, AND SQL suites on every push, uploads reports as artifacts, and shows three live green badges in this README
-- **Playwright cross-browser suite** *(in progress)*
+- **Playwright cross-browser suite** in **TypeScript** — runs the same login flows as Cypress on **Chromium, Firefox, and WebKit (Safari)** in a parallel CI matrix; Trace Viewer artifacts on failure
+- **GitHub Actions CI** runs Cypress, Playwright (×3 browsers), Newman, AND SQL on every push, uploads reports as artifacts, and shows four live green badges in this README
 
 ---
 

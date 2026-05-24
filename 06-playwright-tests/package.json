@@ -1,0 +1,22 @@
+{
+  "name": "qa-engineer-portfolio-playwright",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Cross-browser end-to-end tests with Playwright + TypeScript. Companion to the Cypress suite — same test targets, different framework, different language.",
+  "scripts": {
+    "test": "playwright test",
+    "test:ui": "playwright test --ui",
+    "test:chromium": "playwright test --project=chromium",
+    "test:firefox": "playwright test --project=firefox",
+    "test:webkit": "playwright test --project=webkit",
+    "test:demoblaze": "playwright test tests/demoblaze",
+    "test:ae": "playwright test tests/automationexercise",
+    "report": "playwright show-report",
+    "trace": "playwright show-trace"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.48.0",
+    "@types/node": "^20.12.0",
+    "typescript": "^5.4.5"
+  }
+}

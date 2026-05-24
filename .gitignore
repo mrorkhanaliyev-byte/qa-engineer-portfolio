@@ -12,6 +12,8 @@ cypress/reports/
 cypress/downloads/
 playwright-report/
 test-results/
+.playwright-cache/
+blob-report/
 allure-results/
 allure-report/
 newman-reports/*.html

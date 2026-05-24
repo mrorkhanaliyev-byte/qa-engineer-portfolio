@@ -1,0 +1,74 @@
+name: Playwright Cross-Browser
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '06-playwright-tests/**'
+      - '.github/workflows/playwright.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - '06-playwright-tests/**'
+      - '.github/workflows/playwright.yml'
+  workflow_dispatch:
+
+jobs:
+  playwright-run:
+    name: Playwright on ${{ matrix.browser }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    strategy:
+      fail-fast: false
+      matrix:
+        browser: [chromium, firefox, webkit]
+
+    defaults:
+      run:
+        working-directory: 06-playwright-tests
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: 06-playwright-tests/package-lock.json
+
+      - name: Install npm deps
+        run: npm ci
+
+      - name: Install Playwright browser + system deps
+        # `--with-deps` installs OS-level libs that Firefox / WebKit
+        # need (libwoff, libgstreamer, etc.) — required on Ubuntu.
+        run: npx playwright install --with-deps ${{ matrix.browser }}
+
+      - name: Run Playwright tests
+        env:
+          # Same pattern as the Cypress workflow: tests that require
+          # a pre-registered user on demoblaze.com or AE auto-skip
+          # when this is set. See fixtures/test-data.ts.
+          CI_SKIP_AUTH_TESTS: 'true'
+        run: npx playwright test --project=${{ matrix.browser }} --reporter=list,html
+
+      - name: Upload HTML report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ matrix.browser }}
+          path: 06-playwright-tests/playwright-report
+          if-no-files-found: ignore
+          retention-days: 14
+
+      - name: Upload traces on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-traces-${{ matrix.browser }}
+          path: 06-playwright-tests/test-results
+          if-no-files-found: ignore
+          retention-days: 7
