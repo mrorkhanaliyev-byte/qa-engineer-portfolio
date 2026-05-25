@@ -1,0 +1,58 @@
+Summary,Issue Type,Priority,Severity,Status,Labels,Description,Affects Version/s,Components,Reporter
+Login error message reveals whether email is registered,Bug,High,Major,Open,security;authentication,"When a user enters an unregistered email on the login form, the error message differs from the one shown for a registered email with a wrong password. An attacker can use this difference to enumerate which email addresses have accounts on the site (user enumeration attack).
+
+Steps to Reproduce:
+1. Open https://automationexercise.com/login
+2. Enter an email that has never been registered (e.g., definitely_not_a_user_99999@example.com)
+3. Enter any password
+4. Click Login
+5. Observe the error message
+6. Now repeat with a REGISTERED email but a WRONG password
+7. Compare the two messages
+
+Expected: Same generic message for both cases (OWASP best practice).
+Actual: Messages differ, leaking which emails are registered.
+
+Reference: OWASP A07:2021 — Identification and Authentication Failures",1.0,Authentication,Orkhan Aliyev
+Cart contents are lost after logout and login,Bug,High,Major,In Progress,cart;persistence,"When a logged-in user adds products to their cart, logs out, and logs back in, the cart is empty. Expected behavior is that the cart is server-side persisted and restored on next login.
+
+Steps to Reproduce:
+1. Log in as qa_orkhan@test.com / Test@1234
+2. Add 2 products to the cart
+3. Verify cart contains both items
+4. Click Logout
+5. Log back in with the same account
+6. Open cart
+
+Expected: Cart still contains the 2 products.
+Actual: Cart is empty.
+
+Root cause hypothesis: cart is stored only in browser session and cleared on logout. No server-side persistence keyed by user_id.
+
+Impact: Lost sales; broken cross-device flow; modern e-commerce baseline expectation.",1.0,Cart,Orkhan Aliyev
+Login fails when email is pasted with leading/trailing whitespace,Bug,Medium,Minor,Resolved,authentication;ux,"When a user copies their email from another app (password manager, email signature, Slack) and pastes it into the login form, leading or trailing whitespace is preserved. The server treats ' qa@test.com ' as different from 'qa@test.com' and rejects login with the generic 'incorrect' message, leaving the user confused.
+
+Steps to Reproduce:
+1. In any text editor, type ' qa_orkhan@test.com ' (with surrounding spaces)
+2. Copy the full string including spaces
+3. Paste into the email field on the login form
+4. Enter the correct password
+5. Click Login
+
+Expected: Form trims whitespace on paste or submit; login succeeds.
+Actual: Login fails with generic error; user has no clue that invisible spaces are the cause.
+
+Suggested fix: Apply value.trim() on the paste event of the email input. Server should also defensively trim before lookup.",1.0,Authentication,Orkhan Aliyev
+Add Cypress E2E coverage for checkout flow,Story,Medium,,To Do,automation;e2e;cypress,"As a QA engineer
+I want automated Cypress coverage for the AE checkout flow
+So that regressions in payment / address steps are caught before release.
+
+Acceptance Criteria:
+- Spec at cypress/e2e/automationexercise/checkout.cy.js
+- Page Object for CheckoutPage
+- Covers: address review, place order, payment form, confirmation
+- Maps to manual test cases TC-CHECKOUT-001..014
+- Passes locally and in GitHub Actions CI",1.0,Cypress,Orkhan Aliyev
+Run full regression suite on staging,Task,Medium,,To Do,regression;manual,"Execute the full regression checklist (01-manual-testing/checklists/regression-checklist.md) against staging build before the next release.
+
+Output: filled regression-results-<date>.md with PASS/FAIL per item.",1.0,QA,Orkhan Aliyev

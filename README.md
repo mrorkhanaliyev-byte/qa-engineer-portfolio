@@ -51,6 +51,7 @@ Each section has its own README with run instructions and screenshots.
 - **65 manual test cases** covering login, registration, search, cart, and checkout flows
 - **3 documented bug reports** with reproduction steps, severity, environment, and impact analysis
 - **Smoke + regression checklists** with P0/P1/P2 prioritization
+- **Jira workflow** — custom bug-lifecycle diagram (Mermaid), 15+ JQL queries grouped by daily use case, drag-droppable CSV that imports the bug reports as real Jira tickets
 - **Cypress E2E framework** with Page Object Model and Mochawesome reporting — 5 specs across 4 sites (Demoblaze, Automation Exercise, ABB Bank, Tap.az), **42 test cases** including real Azerbaijani banking and e-commerce production sites
 - **Postman + Newman API suite** — full coverage of Automation Exercise's 14 documented endpoints (45+ assertions), with a chained user-lifecycle scenario that cleans up after itself
 - **SQL validation suite** — SQLite e-commerce schema, 19 queries (basic / joins / subqueries / window functions / QA validation), 5 intentionally planted data-quality bugs that the validation queries surface, runs in <10s
