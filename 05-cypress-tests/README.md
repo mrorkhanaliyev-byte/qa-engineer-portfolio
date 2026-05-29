@@ -16,6 +16,7 @@ End-to-end UI automation built with **Cypress + JavaScript**, applying the **Pag
 |---|---|---|---|---|
 | [Demoblaze](https://www.demoblaze.com/) | Demo e-commerce | `e2e/demoblaze/login.cy.js` | 6 (3 positive, 3 negative) | [`login-test-cases.csv`](../01-manual-testing/test-cases/login-test-cases.csv) |
 | [Automation Exercise](https://automationexercise.com/) | Demo e-commerce | `e2e/automationexercise/login.cy.js` | 12 (5 positive, 5 negative, 2 UI/security) | [`login-test-cases.csv`](../01-manual-testing/test-cases/login-test-cases.csv) |
+| [Automation Exercise](https://automationexercise.com/) | Demo e-commerce | `e2e/automationexercise/cart.cy.js` | 8 (7 positive, 1 negative) | [`cart-test-cases.csv`](../01-manual-testing/test-cases/cart-test-cases.csv) |
 | [ABB Bank](https://kredit.abb-bank.az/cash-loan) | **Production banking** | `e2e/abbbank/credit-calculator.cy.js` | 6 (4 positive, 2 boundary) | Standalone |
 | [ABB Bank](https://abb-bank.az/) | **Production banking** | `e2e/abbbank/currency-converter.cy.js` | 8 (6 UI, 2 HTTP-level) | Standalone |
 | [Tap.az](https://tap.az/) | **Production AZ e-commerce** | `e2e/tapaz/search.cy.js` | 10 (search, category, filters, edge) | Standalone |
@@ -23,10 +24,11 @@ End-to-end UI automation built with **Cypress + JavaScript**, applying the **Pag
 **Roadmap** (added one at a time as each is stabilized):
 
 - [x] Automation Exercise — login (12 TCs)
+- [x] Automation Exercise — cart flow (8 TCs)
 - [x] ABB Bank — credit calculator (6 TCs)
 - [x] ABB Bank — currency converter (8 TCs)
 - [x] Tap.az — search and category browse (10 TCs)
-- [ ] Automation Exercise — cart and checkout flows
+- [ ] Automation Exercise — checkout & payment
 - [ ] Demoblaze — product browse + cart
 - [ ] ABB Bank — site search (`abb_search`)
 - [ ] Tap.az — listing detail page

@@ -36,6 +36,7 @@ The "best" answer depends on the project. This portfolio shows fluency in both.
 |---|---|---|---|
 | [Demoblaze](https://www.demoblaze.com/) | `tests/demoblaze/login.spec.ts` | 6 (3 positive, 3 negative) | [`login-test-cases.csv`](../01-manual-testing/test-cases/login-test-cases.csv) |
 | [Automation Exercise](https://automationexercise.com/) | `tests/automationexercise/login.spec.ts` | 12 (5 positive, 5 negative, 2 UI/security) | [`login-test-cases.csv`](../01-manual-testing/test-cases/login-test-cases.csv) |
+| [Automation Exercise](https://automationexercise.com/) | `tests/automationexercise/cart.spec.ts` | 8 (7 positive, 1 negative) | [`cart-test-cases.csv`](../01-manual-testing/test-cases/cart-test-cases.csv) |
 
 Both specs are **direct counterparts of the Cypress specs** under `05-cypress-tests/`. Same TC IDs, same assertions — different framework. A reader can compare them side-by-side to see how the same testing intent translates between Cypress and Playwright.
 
