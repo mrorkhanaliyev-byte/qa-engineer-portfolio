@@ -4,6 +4,7 @@
 
 [![Cypress E2E](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/cypress.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/cypress.yml)
 [![Playwright Cross-Browser](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/playwright.yml)
+[![Accessibility](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/accessibility.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/accessibility.yml)
 [![Newman API](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml)
 [![SQL Queries](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/sql.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/sql.yml)
 
@@ -56,6 +57,7 @@ Each section has its own README with run instructions and screenshots.
 - **Postman + Newman API suite** — full coverage of Automation Exercise's 14 documented endpoints (45+ assertions), with a chained user-lifecycle scenario that cleans up after itself
 - **SQL validation suite** — SQLite e-commerce schema, 19 queries (basic / joins / subqueries / window functions / QA validation), 5 intentionally planted data-quality bugs that the validation queries surface, runs in <10s
 - **Playwright cross-browser suite** in **TypeScript** — runs the same login + cart flows as Cypress on **Chromium, Firefox, and WebKit (Safari)** in a parallel CI matrix; Trace Viewer artifacts on failure
+- **Accessibility audit (WCAG 2.1 AA)** with `@axe-core/playwright` — 7 page audits across AE + Demoblaze, baseline-as-regression-gate so CI catches a11y debt growing without failing on every minor warning; full findings documented in [`AUDIT-RESULTS.md`](./06-playwright-tests/AUDIT-RESULTS.md)
 - **GitHub Actions CI** runs Cypress, Playwright (×3 browsers), Newman, AND SQL on every push, uploads reports as artifacts, and shows four live green badges in this README
 
 ---

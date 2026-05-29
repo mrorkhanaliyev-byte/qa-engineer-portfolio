@@ -11,10 +11,12 @@
     "test:webkit": "playwright test --project=webkit",
     "test:demoblaze": "playwright test tests/demoblaze",
     "test:ae": "playwright test tests/automationexercise",
+    "test:a11y": "playwright test tests/accessibility --project=chromium",
     "report": "playwright show-report",
     "trace": "playwright show-trace"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.1",
     "@playwright/test": "^1.48.0",
     "@types/node": "^20.12.0",
     "typescript": "^5.4.5"

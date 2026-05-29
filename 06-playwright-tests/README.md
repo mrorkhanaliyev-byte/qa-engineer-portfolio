@@ -3,6 +3,7 @@
 Cross-browser end-to-end tests with **Playwright + TypeScript**, running on **Chromium, Firefox, and WebKit** in a CI matrix. Companion to the Cypress suite — same targets, different framework, different language.
 
 [![Playwright Cross-Browser](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/playwright.yml)
+[![Accessibility](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/accessibility.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/accessibility.yml)
 
 ![Playwright](https://img.shields.io/badge/Playwright-1.48-2EAD33?logo=playwright&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178C6?logo=typescript&logoColor=white)
@@ -37,6 +38,7 @@ The "best" answer depends on the project. This portfolio shows fluency in both.
 | [Demoblaze](https://www.demoblaze.com/) | `tests/demoblaze/login.spec.ts` | 6 (3 positive, 3 negative) | [`login-test-cases.csv`](../01-manual-testing/test-cases/login-test-cases.csv) |
 | [Automation Exercise](https://automationexercise.com/) | `tests/automationexercise/login.spec.ts` | 12 (5 positive, 5 negative, 2 UI/security) | [`login-test-cases.csv`](../01-manual-testing/test-cases/login-test-cases.csv) |
 | [Automation Exercise](https://automationexercise.com/) | `tests/automationexercise/cart.spec.ts` | 8 (7 positive, 1 negative) | [`cart-test-cases.csv`](../01-manual-testing/test-cases/cart-test-cases.csv) |
+| AE + Demoblaze | `tests/accessibility/*.a11y.spec.ts` | 7 WCAG 2.1 AA audits | See [`AUDIT-RESULTS.md`](./AUDIT-RESULTS.md) |
 
 Both specs are **direct counterparts of the Cypress specs** under `05-cypress-tests/`. Same TC IDs, same assertions — different framework. A reader can compare them side-by-side to see how the same testing intent translates between Cypress and Playwright.
 
@@ -98,21 +100,61 @@ The biggest visual difference from Cypress: **every action is `await`**. Forgett
 ├── package-lock.json                # committed for CI reproducibility
 ├── playwright.config.ts             # matrix definition, retries, trace
 ├── tsconfig.json                    # strict mode, path aliases
+├── AUDIT-RESULTS.md                 # WCAG 2.1 AA findings snapshot
 ├── fixtures/
 │   └── test-data.ts                 # credentials + SKIP_AUTH flag
 ├── pages/
+│   ├── helpers/
+│   │   └── AccessibilityAuditor.ts  # axe-core wrapper
 │   ├── demoblaze/
 │   │   └── LoginPage.ts
 │   └── automationexercise/
-│       └── LoginPage.ts
+│       ├── LoginPage.ts
+│       ├── ProductsPage.ts
+│       └── CartPage.ts
 ├── tests/
 │   ├── demoblaze/
 │   │   └── login.spec.ts
-│   └── automationexercise/
-│       └── login.spec.ts
+│   ├── automationexercise/
+│   │   ├── login.spec.ts
+│   │   └── cart.spec.ts
+│   └── accessibility/
+│       ├── ae-pages.a11y.spec.ts
+│       └── demoblaze.a11y.spec.ts
 ├── playwright-report/               # HTML report — gitignored
 └── test-results/                    # traces, screenshots, videos — gitignored
 ```
+
+---
+
+## Accessibility (WCAG 2.1 AA)
+
+Beyond functional E2E, the suite runs **WCAG 2.1 AA audits** on every push via [`@axe-core/playwright`](https://github.com/dequelabs/axe-core-npm). Five pages audited on AE, two on Demoblaze.
+
+### How the audit gate works
+
+Demo sites have accessibility debt that we don't own. A suite that fails on every minor warning gets disabled within a week and regresses to nothing. So the policy:
+
+- **Critical violations gated by a per-page baseline.** The CI test fails ONLY when the count exceeds what was documented in [`AUDIT-RESULTS.md`](./AUDIT-RESULTS.md). A code change that makes things *worse* breaks the build; existing debt is acknowledged, not papered over.
+- **Serious / moderate / minor are reported, not gated.** Logged to the console output and saved to `playwright-report/a11y-findings-*.json` for review.
+
+This is what real production teams do — and the right place to land for portfolio work.
+
+### What's audited
+
+| Site | Pages |
+|---|---|
+| Automation Exercise | `/`, `/login`, `/products`, `/view_cart`, `/contact_us` |
+| Demoblaze | `/`, `/cart.html` |
+
+### Running the audit
+
+```bash
+npm run test:a11y                            # chromium only — a11y rules are engine-independent
+cat playwright-report/a11y-findings-ae.json  # structured JSON of findings
+```
+
+See [`AUDIT-RESULTS.md`](./AUDIT-RESULTS.md) for current findings and the prioritized "what I'd fix first" list.
 
 ---
 
