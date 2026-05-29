@@ -52,3 +52,6 @@ logs/
 dist/
 build/
 out/
+
+# Private job-search materials (not part of public portfolio)
+_job-search/
