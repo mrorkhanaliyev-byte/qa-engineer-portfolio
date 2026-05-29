@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                             http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.orkhanaliyev.qa</groupId>
+    <artifactId>qa-engineer-portfolio-selenium</artifactId>
+    <version>0.1.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>QA Engineer Portfolio — Selenium + Java</name>
+    <description>
+        End-to-end UI tests with Selenium WebDriver and TestNG.
+        Built while learning Java Core + Selenium together; structure
+        evolves as the course progresses. Mirrors the Cypress and
+        Playwright suites in the portfolio so the same flows are
+        testable in three frameworks.
+    </description>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <!-- Pin versions so CI builds are reproducible. -->
+        <selenium.version>4.25.0</selenium.version>
+        <testng.version>7.10.2</testng.version>
+        <webdrivermanager.version>5.9.2</webdrivermanager.version>
+        <log4j.version>2.24.0</log4j.version>
+        <maven.surefire.version>3.5.0</maven.surefire.version>
+    </properties>
+
+    <dependencies>
+        <!-- Selenium WebDriver — the browser automation core -->
+        <dependency>
+            <groupId>org.seleniumhq.selenium</groupId>
+            <artifactId>selenium-java</artifactId>
+            <version>${selenium.version}</version>
+        </dependency>
+
+        <!-- TestNG — test runner (annotations, suites, parallel) -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!--
+            WebDriverManager — auto-downloads the right ChromeDriver /
+            geckodriver for the browser version on the host. Replaces
+            the old pattern of manually downloading drivers and setting
+            System.setProperty("webdriver.chrome.driver", ...).
+        -->
+        <dependency>
+            <groupId>io.github.bonigarcia</groupId>
+            <artifactId>webdrivermanager</artifactId>
+            <version>${webdrivermanager.version}</version>
+        </dependency>
+
+        <!-- Log4j2 — structured logging for tests and page objects -->
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-core</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.logging.log4j</groupId>
+            <artifactId>log4j-api</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven.surefire.version}</version>
+                <configuration>
+                    <suiteXmlFiles>
+                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                    </suiteXmlFiles>
+                    <!-- Pass system properties (e.g. -Dbrowser=chrome) through. -->
+                    <systemPropertyVariables>
+                        <browser>${browser}</browser>
+                    </systemPropertyVariables>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <!-- Default to Chrome if no -Dbrowser= is given. -->
+        <profile>
+            <id>default-browser</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+                <property>
+                    <name>!browser</name>
+                </property>
+            </activation>
+            <properties>
+                <browser>chrome</browser>
+            </properties>
+        </profile>
+    </profiles>
+</project>

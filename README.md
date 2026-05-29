@@ -41,7 +41,7 @@ Each section covers a distinct QA discipline. Together they tell one story: **a 
 | 04 | [API Testing](./04-postman-api-testing/) | REST API collections, env variables, CI runs | Postman, Newman |
 | 05 | [Cypress E2E](./05-cypress-tests/) | UI automation, Page Object Model | Cypress, JavaScript |
 | 06 | [Playwright E2E](./06-playwright-tests/) | Cross-browser automation, fixtures | Playwright, TypeScript |
-| 07 | [Selenium Framework](./07-selenium-java/) | Hybrid framework, TestNG, Page Objects | Selenium, Java, Maven |
+| 07 | [Selenium + Java](./07-selenium-java/) 🚧 | Hybrid framework, TestNG, Page Objects (in progress, built alongside course) | Selenium 4, Java 17, TestNG, Maven |
 
 Each section has its own README with run instructions and screenshots.
 
@@ -58,6 +58,7 @@ Each section has its own README with run instructions and screenshots.
 - **SQL validation suite** — SQLite e-commerce schema, 19 queries (basic / joins / subqueries / window functions / QA validation), 5 intentionally planted data-quality bugs that the validation queries surface, runs in <10s
 - **Playwright cross-browser suite** in **TypeScript** — runs the same login + cart flows as Cypress on **Chromium, Firefox, and WebKit (Safari)** in a parallel CI matrix; Trace Viewer artifacts on failure
 - **Accessibility audit (WCAG 2.1 AA)** with `@axe-core/playwright` — 7 page audits across AE + Demoblaze, baseline-as-regression-gate so CI catches a11y debt growing without failing on every minor warning; full findings documented in [`AUDIT-RESULTS.md`](./06-playwright-tests/AUDIT-RESULTS.md)
+- **Selenium 4 + Java 17 + TestNG framework** *(in progress alongside a Java Core + Selenium course)* — `DriverFactory`, `BaseTest`, hand-rolled POM, 6 Demoblaze login tests mirroring the same TC IDs as the Cypress and Playwright suites; same flow testable in **3 languages** for a side-by-side comparison
 - **GitHub Actions CI** runs Cypress, Playwright (×3 browsers), Newman, AND SQL on every push, uploads reports as artifacts, and shows four live green badges in this README
 
 ---
@@ -122,7 +123,7 @@ newman run collections/automation-exercise-api.postman_collection.json
 **Orkhan Aliyev** — QA Engineer focused on building reliable, scalable test coverage for web applications.
 
 - 📧 mr.orkhan.aliyev@gmail.com
-- 💼 [LinkedIn](https://www.linkedin.com/in/orkhan-aliyev-88718939b/)
+- 💼 [LinkedIn](https://www.linkedin.com/in/orkhan-aliyev-qa/)
 - 🐙 [GitHub](https://github.com/mrorkhanaliyev-byte)
 - 🦊 [GitLab](https://gitlab.com/orkhanaliyev)
 

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+  Default TestNG suite for the portfolio. Runs the full set of tests.
+  Parallel set to "methods" so each test gets its own driver instance
+  (BaseTest creates one per @BeforeMethod).
+
+  Override at the command line:
+    mvn test -Dbrowser=firefox
+    mvn test -DskipAuth=true     (skips tests that need a pre-registered user)
+-->
+<suite name="QA Portfolio — Full" parallel="methods" thread-count="2" verbose="1">
+
+    <test name="Demoblaze">
+        <classes>
+            <class name="tests.demoblaze.LoginTests"/>
+        </classes>
+    </test>
+
+</suite>
