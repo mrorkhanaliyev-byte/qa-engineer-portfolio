@@ -19,6 +19,8 @@ End-to-end UI automation built with **Cypress + JavaScript**, applying the **Pag
 | [Automation Exercise](https://automationexercise.com/) | Demo e-commerce | `e2e/automationexercise/cart.cy.js` | 8 (7 positive, 1 negative) | [`cart-test-cases.csv`](../01-manual-testing/test-cases/cart-test-cases.csv) |
 | [ABB Bank](https://kredit.abb-bank.az/cash-loan) | **Production banking** | `e2e/abbbank/credit-calculator.cy.js` | 6 (4 positive, 2 boundary) | Standalone |
 | [ABB Bank](https://abb-bank.az/) | **Production banking** | `e2e/abbbank/currency-converter.cy.js` | 8 (6 UI, 2 HTTP-level) | Standalone |
+| [ABB Bank](https://abb-bank.az/) | **Production banking** | `e2e/abbbank/search.cy.js` | 6 (3 positive, 3 resilience) | Standalone |
+| [Rabitabank](https://www.rabitabank.com/) | **Production banking** | `e2e/rabitabank/navigation.cy.js` | 8 (HTTP 200 + render checks) | Standalone |
 | [Tap.az](https://tap.az/) | **Production AZ e-commerce** | `e2e/tapaz/search.cy.js` | 10 (search, category, filters, edge) | Standalone |
 
 **Roadmap** (added one at a time as each is stabilized):
@@ -27,13 +29,16 @@ End-to-end UI automation built with **Cypress + JavaScript**, applying the **Pag
 - [x] Automation Exercise — cart flow (8 TCs)
 - [x] ABB Bank — credit calculator (6 TCs)
 - [x] ABB Bank — currency converter (8 TCs)
+- [x] ABB Bank — site search (6 TCs)
+- [x] Rabitabank — site navigation (8 TCs)
 - [x] Tap.az — search and category browse (10 TCs)
 - [ ] Automation Exercise — checkout & payment
 - [ ] Demoblaze — product browse + cart
-- [ ] ABB Bank — site search (`abb_search`)
 - [ ] Tap.az — listing detail page
 
-> **Why both production sites and demo sites?** Demo sites prove I can write clean automation against a controlled target. Production sites (ABB Bank, Tapaz) prove I can handle real-world DOM noise, third-party widgets, analytics scripts, and intermittent latency — which is what the job actually looks like.
+> **Why both production sites and demo sites?** Demo sites prove I can write clean automation against a controlled target. **Two** production banks (ABB Bank, Rabitabank) plus Tap.az prove I can handle real-world DOM noise, third-party widgets, analytics scripts, and intermittent latency across more than one codebase — which is what the job actually looks like.
+
+> **A real finding while migrating Rabitabank:** the original navigation test asserted only that the URL stayed on the bank's domain, so it "passed" even on 5 paths that now return HTTP 404 (a 404 page keeps the domain in its URL). Upgrading the assertions to **HTTP 200 + rendered body** surfaced the broken links; the path map was then corrected to verified-reachable pages. This is exactly why a real assertion beats a cosmetic one.
 
 ---
 
@@ -57,10 +62,14 @@ End-to-end UI automation built with **Cypress + JavaScript**, applying the **Pag
 │   │   ├── demoblaze/
 │   │   │   └── login.cy.js
 │   │   ├── automationexercise/
-│   │   │   └── login.cy.js
+│   │   │   ├── login.cy.js
+│   │   │   └── cart.cy.js
 │   │   ├── abbbank/
 │   │   │   ├── credit-calculator.cy.js
-│   │   │   └── currency-converter.cy.js
+│   │   │   ├── currency-converter.cy.js
+│   │   │   └── search.cy.js
+│   │   ├── rabitabank/
+│   │   │   └── navigation.cy.js
 │   │   └── tapaz/
 │   │       └── search.cy.js
 │   ├── fixtures/                         # Test data (users, products, etc.)
@@ -69,10 +78,15 @@ End-to-end UI automation built with **Cypress + JavaScript**, applying the **Pag
 │   │   ├── demoblaze/
 │   │   │   └── LoginPage.js
 │   │   ├── automationexercise/
-│   │   │   └── LoginPage.js
+│   │   │   ├── LoginPage.js
+│   │   │   ├── ProductsPage.js
+│   │   │   └── CartPage.js
 │   │   ├── abbbank/
 │   │   │   ├── CreditCalculatorPage.js
-│   │   │   └── CurrencyConverterPage.js
+│   │   │   ├── CurrencyConverterPage.js
+│   │   │   └── SearchPage.js
+│   │   ├── rabitabank/
+│   │   │   └── NavigationPage.js
 │   │   └── tapaz/
 │   │       └── SearchPage.js
 │   ├── support/
@@ -136,6 +150,7 @@ npm run cy:run             # Headless
 npm run test:demoblaze          # Only Demoblaze specs
 npm run test:automationexercise # Only Automation Exercise specs
 npm run test:abbbank            # Only ABB Bank specs (production banking)
+npm run test:rabitabank         # Only Rabitabank specs (production banking)
 npm run test:tapaz              # Only Tap.az specs (production AZ e-commerce)
 npx cypress run --spec "cypress/e2e/demoblaze/login.cy.js"  # Single file
 ```

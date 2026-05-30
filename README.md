@@ -53,7 +53,7 @@ Each section has its own README with run instructions and screenshots.
 - **3 documented bug reports** with reproduction steps, severity, environment, and impact analysis
 - **Smoke + regression checklists** with P0/P1/P2 prioritization
 - **Jira workflow** — custom bug-lifecycle diagram (Mermaid), 15+ JQL queries grouped by daily use case, drag-droppable CSV that imports the bug reports as real Jira tickets
-- **Cypress E2E framework** with Page Object Model and Mochawesome reporting — 6 specs across 4 sites (Demoblaze, Automation Exercise login+cart, ABB Bank, Tap.az), **50 test cases** including real Azerbaijani banking and e-commerce production sites
+- **Cypress E2E framework** with Page Object Model and Mochawesome reporting — 8 specs across 5 sites (Demoblaze, Automation Exercise login+cart, **two production banks** ABB Bank + Rabitabank, Tap.az), **64 test cases** including real Azerbaijani banking and e-commerce production sites
 - **Postman + Newman API suite** — full coverage of Automation Exercise's 14 documented endpoints (45+ assertions), with a chained user-lifecycle scenario that cleans up after itself
 - **SQL validation suite** — SQLite e-commerce schema, 19 queries (basic / joins / subqueries / window functions / QA validation), 5 intentionally planted data-quality bugs that the validation queries surface, runs in <10s
 - **Playwright cross-browser suite** in **TypeScript** — runs the same login + cart flows as Cypress on **Chromium, Firefox, and WebKit (Safari)** in a parallel CI matrix; Trace Viewer artifacts on failure

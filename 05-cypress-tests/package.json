@@ -11,6 +11,7 @@
     "test:demoblaze": "cypress run --spec 'cypress/e2e/demoblaze/**/*.cy.js'",
     "test:automationexercise": "cypress run --spec 'cypress/e2e/automationexercise/**/*.cy.js'",
     "test:abbbank": "cypress run --spec 'cypress/e2e/abbbank/**/*.cy.js'",
+    "test:rabitabank": "cypress run --spec 'cypress/e2e/rabitabank/**/*.cy.js'",
     "test:tapaz": "cypress run --spec 'cypress/e2e/tapaz/**/*.cy.js'",
     "report:merge": "mochawesome-merge cypress/reports/*.json > cypress/reports/index.json",
     "report:generate": "marge cypress/reports/index.json -o cypress/reports/html"
