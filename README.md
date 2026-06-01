@@ -50,7 +50,8 @@ Each section has its own README with run instructions and screenshots.
 ## Highlights
 
 - **65 manual test cases** covering login, registration, search, cart, and checkout flows
-- **3 documented bug reports** with reproduction steps, severity, environment, and impact analysis
+- **6 documented bug reports** — two user-enumeration security findings (one UI, one API), a 404 broken-links finding on a production bank, a WCAG accessibility failure, a cart-persistence bug, and a UX whitespace bug — each surfaced through a *different* testing layer
+- **Requirements Traceability Matrix** mapping 46 requirements → test cases → automated tests → bugs across all sections, plus a **Cycle 1 test execution summary** with metrics and a go/no-go recommendation
 - **Smoke + regression checklists** with P0/P1/P2 prioritization
 - **Jira workflow** — custom bug-lifecycle diagram (Mermaid), 15+ JQL queries grouped by daily use case, drag-droppable CSV that imports the bug reports as real Jira tickets
 - **Cypress E2E framework** with Page Object Model and Mochawesome reporting — 8 specs across 5 sites (Demoblaze, Automation Exercise login+cart, **two production banks** ABB Bank + Rabitabank, Tap.az), **64 test cases** including real Azerbaijani banking and e-commerce production sites
