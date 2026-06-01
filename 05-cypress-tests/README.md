@@ -23,6 +23,8 @@ End-to-end UI automation built with **Cypress + JavaScript**, applying the **Pag
 | [ABB Bank](https://abb-bank.az/) | **Production banking** | `e2e/abbbank/currency-converter.cy.js` | 8 (6 UI, 2 HTTP-level) | Standalone |
 | [ABB Bank](https://abb-bank.az/) | **Production banking** | `e2e/abbbank/search.cy.js` | 6 (3 positive, 3 resilience) | Standalone |
 | [Rabitabank](https://www.rabitabank.com/) | **Production banking** | `e2e/rabitabank/navigation.cy.js` | 8 (HTTP 200 + render checks) | Standalone |
+| [The Internet](https://the-internet.herokuapp.com/) | Automation playground | `e2e/theinternet/form-elements.cy.js` | 4 (dropdown, checkboxes, dynamic DOM, number input) | Standalone |
+| [The Internet](https://the-internet.herokuapp.com/) | Automation playground | `e2e/theinternet/interactions.cy.js` | 7 (alerts, iframe, async wait, file upload, windows) | Standalone |
 | [Tap.az](https://tap.az/) | **Production AZ e-commerce** | `e2e/tapaz/search.cy.js` | 10 (search, category, filters, edge) | Standalone |
 
 **Roadmap** (added one at a time as each is stabilized):
@@ -35,6 +37,7 @@ End-to-end UI automation built with **Cypress + JavaScript**, applying the **Pag
 - [x] ABB Bank — currency converter (8 TCs)
 - [x] ABB Bank — site search (6 TCs)
 - [x] Rabitabank — site navigation (8 TCs)
+- [x] The Internet — form elements & advanced interactions (11 TCs)
 - [x] Tap.az — search and category browse (10 TCs)
 - [ ] Demoblaze — product browse + cart
 - [ ] Tap.az — listing detail page
@@ -153,6 +156,7 @@ npm run cy:run             # Headless
 npm run test:demoblaze          # Only Demoblaze specs
 npm run test:automationexercise # Only Automation Exercise specs
 npm run test:saucedemo          # Only SauceDemo specs (full purchase flow)
+npm run test:theinternet        # Only The Internet specs (element-handling techniques)
 npm run test:abbbank            # Only ABB Bank specs (production banking)
 npm run test:rabitabank         # Only Rabitabank specs (production banking)
 npm run test:tapaz              # Only Tap.az specs (production AZ e-commerce)

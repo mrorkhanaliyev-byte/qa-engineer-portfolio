@@ -13,6 +13,7 @@
     "test:abbbank": "cypress run --spec 'cypress/e2e/abbbank/**/*.cy.js'",
     "test:rabitabank": "cypress run --spec 'cypress/e2e/rabitabank/**/*.cy.js'",
     "test:saucedemo": "cypress run --spec 'cypress/e2e/saucedemo/**/*.cy.js'",
+    "test:theinternet": "cypress run --spec 'cypress/e2e/theinternet/**/*.cy.js'",
     "test:tapaz": "cypress run --spec 'cypress/e2e/tapaz/**/*.cy.js'",
     "report:merge": "mochawesome-merge cypress/reports/*.json > cypress/reports/index.json",
     "report:generate": "marge cypress/reports/index.json -o cypress/reports/html"

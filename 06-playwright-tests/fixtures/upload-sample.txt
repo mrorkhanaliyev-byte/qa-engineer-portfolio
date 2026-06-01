@@ -1,0 +1,2 @@
+QA Engineer Portfolio — sample file for The Internet upload test.
+This file is uploaded by the file-upload technique demonstration.

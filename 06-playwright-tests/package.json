@@ -12,6 +12,7 @@
     "test:demoblaze": "playwright test tests/demoblaze",
     "test:ae": "playwright test tests/automationexercise",
     "test:saucedemo": "playwright test tests/saucedemo",
+    "test:theinternet": "playwright test tests/theinternet",
     "test:a11y": "playwright test tests/accessibility --project=chromium",
     "report": "playwright show-report",
     "trace": "playwright show-trace"

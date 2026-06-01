@@ -40,6 +40,8 @@ The "best" answer depends on the project. This portfolio shows fluency in both.
 | [Automation Exercise](https://automationexercise.com/) | `tests/automationexercise/cart.spec.ts` | 8 (7 positive, 1 negative) | [`cart-test-cases.csv`](../01-manual-testing/test-cases/cart-test-cases.csv) |
 | [SauceDemo](https://www.saucedemo.com/) | `tests/saucedemo/login.spec.ts` | 6 (login personas) | Standalone |
 | [SauceDemo](https://www.saucedemo.com/) | `tests/saucedemo/checkout.spec.ts` | 8 (**full purchase → confirmation**, serial) | [`checkout-test-cases.csv`](../01-manual-testing/test-cases/checkout-test-cases.csv) |
+| [The Internet](https://the-internet.herokuapp.com/) | `tests/theinternet/form-elements.spec.ts` | 4 (dropdown, checkboxes, dynamic DOM, number input) | Standalone |
+| [The Internet](https://the-internet.herokuapp.com/) | `tests/theinternet/interactions.spec.ts` | 7 (alerts, iframe, async wait, file upload, **real 2nd tab**) | Standalone |
 | AE + Demoblaze | `tests/accessibility/*.a11y.spec.ts` | 7 WCAG 2.1 AA audits | See [`AUDIT-RESULTS.md`](./AUDIT-RESULTS.md) |
 
 Both specs are **direct counterparts of the Cypress specs** under `05-cypress-tests/`. Same TC IDs, same assertions — different framework. A reader can compare them side-by-side to see how the same testing intent translates between Cypress and Playwright.
