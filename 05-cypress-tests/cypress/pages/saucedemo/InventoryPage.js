@@ -24,27 +24,6 @@ class InventoryPage {
   // ---- Actions ------------------------------------------------
 
   /**
-   * Reset to a clean, empty-cart inventory between tests that share
-   * one logged-in session (the testIsolation:false checkout spec).
-   *
-   * Implementation: clear SauceDemo's cart (stored in the
-   * `cart-contents` localStorage key) and reload the inventory. This
-   * is deterministic — unlike the burger-menu "Reset App State" path,
-   * which depends on slide-out animation timing and intermittently
-   * blocks the next menu interaction. The session cookie persists, so
-   * the reloaded SPA renders the inventory already authenticated. The
-   * static host 404s the path but serves the app body regardless,
-   * hence failOnStatusCode:false.
-   */
-  resetToCleanInventory() {
-    cy.window().then((w) => w.localStorage.removeItem('cart-contents'))
-    cy.visit('https://www.saucedemo.com/inventory.html', { failOnStatusCode: false })
-    this.elements.inventoryItems().should('have.length', 6)
-    this.elements.cartBadge().should('not.exist')
-    return this
-  }
-
-  /**
    * Select a sort option by its <option> value:
    *   az  = Name A→Z   |  za = Name Z→A
    *   lohi = Price low→high  |  hilo = Price high→low

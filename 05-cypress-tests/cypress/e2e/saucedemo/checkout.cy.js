@@ -12,6 +12,7 @@
 // Page Objects: pages/saucedemo/{Login,Inventory,Cart,Checkout}Page.js
 // ============================================================
 
+import loginPage     from '../../pages/saucedemo/LoginPage'
 import inventoryPage from '../../pages/saucedemo/InventoryPage'
 import cartPage      from '../../pages/saucedemo/CartPage'
 import checkoutPage  from '../../pages/saucedemo/CheckoutPage'
@@ -19,33 +20,26 @@ import checkoutPage  from '../../pages/saucedemo/CheckoutPage'
 const BACKPACK = 'sauce-labs-backpack'
 const BIKE_LIGHT = 'sauce-labs-bike-light'
 
-// testIsolation:false → the whole purchase flow shares ONE logged-in
-// session and ONE page load. This is the right model for a sequential
-// e-commerce journey AND it removes a class of flake: public demo
-// CDNs (SauceDemo) throttle an IP that logs in 8× in a minute, which
-// would otherwise produce "page failed to load" timeouts unrelated to
-// the code. We log in once, then reset app state between tests in-app.
-describe('SauceDemo — Full Purchase Flow', { testIsolation: false }, () => {
+describe('SauceDemo — Full Purchase Flow', () => {
   let users
 
   before(() => {
     cy.fixture('users').then((data) => {
       users = data.saucedemo
-
-      // One UI login for the entire spec, then land on inventory.
-      cy.useDesktopViewport()
-      cy.visit('https://www.saucedemo.com/')
-      cy.get('[data-test="username"]').type(users.standard)
-      cy.get('[data-test="password"]').type(users.password)
-      cy.get('[data-test="login-button"]').click()
-      cy.url().should('include', '/inventory.html')
     })
   })
 
   beforeEach(() => {
-    // Reset to a clean, empty-cart inventory between tests — in-app
-    // via the burger menu, no page reload (so no repeated CDN hits).
-    inventoryPage.resetToCleanInventory()
+    // Fresh UI login per test. Default test isolation clears cookies +
+    // localStorage between tests, so each starts with an empty cart.
+    //
+    // We log in through the UI (which only visits the 200-OK root and
+    // then routes to inventory in-app) rather than cy.visit-ing
+    // /inventory.html directly: that path returns HTTP 404 from the
+    // static host (History-API SPA with no physical file), and Cypress
+    // chokes on the resulting DOMException. Logging in via the UI side-
+    // steps the 404 navigation entirely.
+    loginPage.visit().loginAs(users.standard, users.password).assertOnInventory()
   })
 
   // ----------------------------------------------------------
