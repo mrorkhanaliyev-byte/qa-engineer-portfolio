@@ -2,9 +2,11 @@
   "name": "qa-engineer-portfolio-newman",
   "version": "1.0.0",
   "private": true,
-  "description": "Newman-based API test runner for the Automation Exercise REST API, part of the QA Engineer Portfolio.",
+  "description": "Newman-based API test runner for two targets — the Automation Exercise API and the restful-booker API — part of the QA Engineer Portfolio.",
   "scripts": {
-    "test": "newman run collections/automation-exercise-api.postman_collection.json -e environments/automation-exercise.postman_environment.json",
+    "test": "npm run test:ae && npm run test:booker",
+    "test:ae": "newman run collections/automation-exercise-api.postman_collection.json -e environments/automation-exercise.postman_environment.json --env-var CI=true",
+    "test:booker": "newman run collections/restful-booker-api.postman_collection.json -e environments/restful-booker.postman_environment.json",
     "test:report": "newman run collections/automation-exercise-api.postman_collection.json -e environments/automation-exercise.postman_environment.json -r cli,htmlextra --reporter-htmlextra-export newman-reports/report.html",
     "test:json": "newman run collections/automation-exercise-api.postman_collection.json -e environments/automation-exercise.postman_environment.json -r cli,json --reporter-json-export newman-reports/report.json"
   },

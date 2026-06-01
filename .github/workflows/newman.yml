@@ -15,7 +15,7 @@ on:
 
 jobs:
   newman-run:
-    name: Newman against Automation Exercise API
+    name: Newman against AE + restful-booker APIs
     runs-on: ubuntu-latest
 
     defaults:
@@ -36,35 +36,42 @@ jobs:
       - name: Install Newman + reporter
         run: npm ci
 
-      - name: Run collection
+      - name: Run Automation Exercise collection
         # --env-var CI=true makes the verifyLogin (valid creds) test skip
         # itself if AE's user is not provisioned — same pattern as Cypress.
-        # --bail=false: keep running after a failed request so we see ALL
-        # failures in one run, not just the first.
         run: |
           mkdir -p newman-reports
           npx newman run collections/automation-exercise-api.postman_collection.json \
             -e environments/automation-exercise.postman_environment.json \
             --env-var "CI=true" \
             --reporters cli,htmlextra,junit \
-            --reporter-htmlextra-export newman-reports/report.html \
-            --reporter-junit-export newman-reports/report.xml \
+            --reporter-htmlextra-export newman-reports/ae-report.html \
+            --reporter-junit-export newman-reports/ae-report.xml \
             --color on
 
-      - name: Upload HTML report
+      - name: Run restful-booker collection (full CRUD + auth)
+        run: |
+          npx newman run collections/restful-booker-api.postman_collection.json \
+            -e environments/restful-booker.postman_environment.json \
+            --reporters cli,htmlextra,junit \
+            --reporter-htmlextra-export newman-reports/booker-report.html \
+            --reporter-junit-export newman-reports/booker-report.xml \
+            --color on
+
+      - name: Upload HTML reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: newman-html-report
-          path: 04-postman-api-testing/newman-reports/report.html
+          name: newman-html-reports
+          path: 04-postman-api-testing/newman-reports/*.html
           if-no-files-found: ignore
           retention-days: 14
 
-      - name: Upload JUnit XML
+      - name: Upload JUnit XML reports
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: newman-junit-report
-          path: 04-postman-api-testing/newman-reports/report.xml
+          name: newman-junit-reports
+          path: 04-postman-api-testing/newman-reports/*.xml
           if-no-files-found: ignore
           retention-days: 14

@@ -1,6 +1,11 @@
 # 04 — API Testing with Postman + Newman
 
-REST API test collection for **[Automation Exercise API](https://automationexercise.com/api_list)** — full coverage of all **14 documented endpoints** with positive cases, negative cases, contract validation, and a chained user-lifecycle scenario.
+Two REST API test collections, run headlessly with Newman in CI:
+
+1. **[Automation Exercise API](https://automationexercise.com/api_list)** — all 14 documented endpoints. A deliberately *quirky* API that always returns HTTP 200 with the real status in the body.
+2. **[restful-booker API](https://restful-booker.herokuapp.com/apidoc/index.html)** — a *proper* REST API with token auth, a full CRUD lifecycle, and genuine status codes (201 / 200 / 403 / 404).
+
+Testing both shows the same skills against two very different API contracts.
 
 [![Newman API](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml)
 
@@ -13,13 +18,49 @@ REST API test collection for **[Automation Exercise API](https://automationexerc
 
 ## At a Glance
 
-| | |
-|---|---|
-| Requests | 14 |
-| Test assertions | 45+ |
-| Folders | 5 (Health, Search, Auth, Method-Not-Allowed, User Lifecycle) |
-| CI runtime | < 30 seconds |
-| Cleanup | Automatic — user-lifecycle chain deletes its own test data |
+| Collection | Requests | Assertions | Highlights |
+|---|---|---|---|
+| Automation Exercise | 14 | 45+ | Always-200 quirk handled; chained user lifecycle |
+| restful-booker | 13 | 24 | Token auth, full CRUD chain, real 403 / 404, self-cleaning |
+| **Total** | **27** | **65+** | CI runtime ~30s, both collections green |
+
+---
+
+## Two contracts, one skill set
+
+| | Automation Exercise | restful-booker |
+|---|---|---|
+| Status codes | Always **200** (real code in `responseCode` body field) | **Genuine** — 201, 200, 403, 404 |
+| Auth | None | **Token** (POST /auth → reused via Cookie) |
+| Operations | Read + a create/update/delete user chain | **Full CRUD** — POST/GET/PUT/PATCH/DELETE |
+| Negative tests | Missing params, wrong method | **403** (no auth), **404** (missing record), bad credentials |
+| What it teaches | Don't trust the HTTP status alone | Standard REST semantics + auth flows |
+
+Testing a "well-behaved" API and a quirky one side-by-side is the point: real projects have both, and the assertions have to be written for the contract in front of you.
+
+---
+
+## restful-booker — the CRUD lifecycle
+
+The booking collection walks one record through its whole life, each step feeding the next:
+
+```
+POST /auth ───────────────▶ capture {{token}}
+POST /booking ────────────▶ capture {{bookingId}}   (201-style create)
+GET  /booking/{{id}}  ─────▶ read back, assert fields match
+GET  /booking ────────────▶ list — our id is present
+GET  /booking?firstname… ─▶ filter — our id is present
+PUT  /booking/{{id}} ─────▶ full update   (needs token)
+PATCH /booking/{{id}} ────▶ partial update — patched fields change, rest preserved
+DELETE /booking/{{id}} ───▶ delete (201)  (needs token)
+GET  /booking/{{id}} ─────▶ confirm 404
+```
+
+Plus a **Negative / Authorization** folder:
+- `PUT` with **no token** → asserts **403 Forbidden**
+- `GET` a non-existent id → asserts **404 Not Found**
+
+The chain deletes the booking it created — no orphan data left on the public server.
 
 ---
 
@@ -105,19 +146,21 @@ pm.test('At least one result matches the keyword', () => {
 ```bash
 cd 04-postman-api-testing
 npm install
-npm test                # runs collection, CLI output only
-npm run test:report     # also generates newman-reports/report.html
+npm test                # runs BOTH collections (AE + restful-booker)
+npm run test:ae         # only the Automation Exercise collection
+npm run test:booker     # only the restful-booker CRUD collection
+npm run test:report     # AE run with an HTML report in newman-reports/
 ```
 
 ### Option B — Postman GUI (for iterating)
 
 1. Open Postman desktop
-2. **Import** → drag `collections/automation-exercise-api.postman_collection.json`
-3. **Import** → drag `environments/automation-exercise.postman_environment.json`
-4. Top right corner → select environment **"Automation Exercise — Default"**
+2. **Import** → drag a collection from `collections/` (AE or restful-booker)
+3. **Import** → drag the matching file from `environments/`
+4. Top right corner → select the environment
 5. Click any request → **Send**
 
-The collection looks identical in both — Newman is just the headless runner over the same JSON.
+The collections look identical in the GUI and in Newman — Newman is just the headless runner over the same JSON.
 
 ---
 
@@ -142,10 +185,10 @@ After that, the local run includes that test in its results.
 - `04-postman-api-testing/**`
 - `.github/workflows/newman.yml`
 
-Path-scoped triggers keep CI fast (~30s end-to-end). On every run, two artifacts are uploaded:
+Path-scoped triggers keep CI fast (~30s end-to-end). It runs **both** collections as separate steps (both must pass). On every run, the HTML and JUnit reports for each collection are uploaded as artifacts:
 
-- **`newman-html-report`** — Mochawesome-style HTML for human reading
-- **`newman-junit-report`** — JUnit XML for CI dashboards (e.g. SonarQube)
+- **`newman-html-reports`** — `ae-report.html` + `booker-report.html` for human reading
+- **`newman-junit-reports`** — JUnit XML for CI dashboards (e.g. SonarQube)
 
 ---
 
@@ -157,9 +200,11 @@ Path-scoped triggers keep CI fast (~30s end-to-end). On every run, two artifacts
 ├── package.json
 ├── package-lock.json                              # committed for CI reproducibility
 ├── collections/
-│   └── automation-exercise-api.postman_collection.json
+│   ├── automation-exercise-api.postman_collection.json
+│   └── restful-booker-api.postman_collection.json
 ├── environments/
-│   └── automation-exercise.postman_environment.json
+│   ├── automation-exercise.postman_environment.json
+│   └── restful-booker.postman_environment.json
 └── newman-reports/                                # gitignored — CLI output only
 ```
 
