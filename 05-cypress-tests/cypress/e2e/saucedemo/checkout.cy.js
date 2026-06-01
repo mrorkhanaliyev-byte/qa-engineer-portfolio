@@ -12,7 +12,6 @@
 // Page Objects: pages/saucedemo/{Login,Inventory,Cart,Checkout}Page.js
 // ============================================================
 
-import loginPage     from '../../pages/saucedemo/LoginPage'
 import inventoryPage from '../../pages/saucedemo/InventoryPage'
 import cartPage      from '../../pages/saucedemo/CartPage'
 import checkoutPage  from '../../pages/saucedemo/CheckoutPage'
@@ -20,26 +19,32 @@ import checkoutPage  from '../../pages/saucedemo/CheckoutPage'
 const BACKPACK = 'sauce-labs-backpack'
 const BIKE_LIGHT = 'sauce-labs-bike-light'
 
-describe('SauceDemo — Full Purchase Flow', () => {
+// testIsolation:false → ONE logged-in session shared across the flow.
+// SauceDemo rate-limits an IP that logs in 8× in a minute (it slowed
+// even the GitHub CI runner), so a fresh login per test is the wrong
+// model here. We log in once and reset state between tests IN-APP via
+// the burger menu (no network, no /inventory.html 404 round-trip).
+describe('SauceDemo — Full Purchase Flow', { testIsolation: false }, () => {
   let users
 
   before(() => {
     cy.fixture('users').then((data) => {
       users = data.saucedemo
+
+      // One UI login for the entire spec. The login button routes to
+      // inventory in-app (pushState), so we never cy.visit the 404 path.
+      cy.useDesktopViewport()
+      cy.visit('https://www.saucedemo.com/')
+      cy.get('[data-test="username"]').type(users.standard)
+      cy.get('[data-test="password"]').type(users.password)
+      cy.get('[data-test="login-button"]').click()
+      cy.url().should('include', '/inventory.html')
     })
   })
 
   beforeEach(() => {
-    // Fresh UI login per test. Default test isolation clears cookies +
-    // localStorage between tests, so each starts with an empty cart.
-    //
-    // We log in through the UI (which only visits the 200-OK root and
-    // then routes to inventory in-app) rather than cy.visit-ing
-    // /inventory.html directly: that path returns HTTP 404 from the
-    // static host (History-API SPA with no physical file), and Cypress
-    // chokes on the resulting DOMException. Logging in via the UI side-
-    // steps the 404 navigation entirely.
-    loginPage.visit().loginAs(users.standard, users.password).assertOnInventory()
+    // In-app reset to a clean, empty-cart inventory (see InventoryPage).
+    inventoryPage.resetToCleanInventory()
   })
 
   // ----------------------------------------------------------

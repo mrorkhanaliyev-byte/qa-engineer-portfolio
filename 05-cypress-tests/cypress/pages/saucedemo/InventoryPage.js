@@ -19,9 +19,40 @@ class InventoryPage {
     // [data-test="add-to-cart-sauce-labs-backpack"].
     addToCartButton: (slug) => cy.get(`[data-test="add-to-cart-${slug}"]`),
     removeButton:    (slug) => cy.get(`[data-test="remove-${slug}"]`),
+
+    // Continue-shopping button on the cart page — used to navigate back
+    // to the inventory IN-APP (no server request).
+    continueShopping: () => cy.get('[data-test="continue-shopping"]'),
   }
 
   // ---- Actions ------------------------------------------------
+
+  /**
+   * Reset to a clean, empty-cart inventory between tests that share one
+   * logged-in session (the testIsolation:false checkout spec).
+   *
+   * Why this shape (clear localStorage + cart-link → continue-shopping):
+   *   - SauceDemo serves /inventory.html with an HTTP 404 status (it's a
+   *     History-API SPA). cy.visit / cy.reload on that path makes Cypress
+   *     choke on the resulting DOMException intermittently — so we never
+   *     re-navigate by URL.
+   *   - A fresh UI login per test (8×) trips SauceDemo's CDN rate-limit
+   *     even from CI — so we log in once and reset in-app.
+   *   - The burger menu works too, but its slide-out animation makes the
+   *     reset/all-items clicks flaky.
+   * Clearing the `cart-contents` localStorage key empties the cart; the
+   * two in-app navigations (cart link, then "Continue Shopping") force a
+   * pushState re-render of the inventory from the clean state, with no
+   * network round-trip and no animation timing to fight.
+   */
+  resetToCleanInventory() {
+    cy.window().then((w) => w.localStorage.removeItem('cart-contents'))
+    this.elements.cartLink().click()
+    this.elements.continueShopping().click()
+    this.elements.inventoryItems().should('have.length', 6)
+    this.elements.cartBadge().should('not.exist')
+    return this
+  }
 
   /**
    * Select a sort option by its <option> value:
