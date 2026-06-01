@@ -33,5 +33,18 @@
       "email": "notanemail",
       "password": "SomePass123"
     }
+  },
+  "saucedemo": {
+    "_note": "SauceDemo credentials are PUBLIC and fixed — no provisioning needed, so the full authenticated checkout flow runs in CI. Password is 'secret_sauce' for every user.",
+    "password": "secret_sauce",
+    "standard": "standard_user",
+    "lockedOut": "locked_out_user",
+    "problem": "problem_user",
+    "wrongPassword": "definitely_wrong_password",
+    "buyer": {
+      "firstName": "Orkhan",
+      "lastName": "Aliyev",
+      "postalCode": "AZ1000"
+    }
   }
 }

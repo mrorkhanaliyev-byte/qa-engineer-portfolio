@@ -15,6 +15,8 @@ End-to-end UI automation built with **Cypress + JavaScript**, applying the **Pag
 | Site | Domain | Spec | Test Cases | Maps to |
 |---|---|---|---|---|
 | [Demoblaze](https://www.demoblaze.com/) | Demo e-commerce | `e2e/demoblaze/login.cy.js` | 6 (3 positive, 3 negative) | [`login-test-cases.csv`](../01-manual-testing/test-cases/login-test-cases.csv) |
+| [SauceDemo](https://www.saucedemo.com/) | Demo e-commerce | `e2e/saucedemo/login.cy.js` | 6 (2 positive, 4 negative personas) | Standalone |
+| [SauceDemo](https://www.saucedemo.com/) | Demo e-commerce | `e2e/saucedemo/checkout.cy.js` | 8 (**full purchase → confirmation**) | [`checkout-test-cases.csv`](../01-manual-testing/test-cases/checkout-test-cases.csv) |
 | [Automation Exercise](https://automationexercise.com/) | Demo e-commerce | `e2e/automationexercise/login.cy.js` | 12 (5 positive, 5 negative, 2 UI/security) | [`login-test-cases.csv`](../01-manual-testing/test-cases/login-test-cases.csv) |
 | [Automation Exercise](https://automationexercise.com/) | Demo e-commerce | `e2e/automationexercise/cart.cy.js` | 8 (7 positive, 1 negative) | [`cart-test-cases.csv`](../01-manual-testing/test-cases/cart-test-cases.csv) |
 | [ABB Bank](https://kredit.abb-bank.az/cash-loan) | **Production banking** | `e2e/abbbank/credit-calculator.cy.js` | 6 (4 positive, 2 boundary) | Standalone |
@@ -25,6 +27,8 @@ End-to-end UI automation built with **Cypress + JavaScript**, applying the **Pag
 
 **Roadmap** (added one at a time as each is stabilized):
 
+- [x] SauceDemo — login personas (6 TCs)
+- [x] SauceDemo — **full purchase flow through confirmation** (8 TCs) — closes the checkout gap
 - [x] Automation Exercise — login (12 TCs)
 - [x] Automation Exercise — cart flow (8 TCs)
 - [x] ABB Bank — credit calculator (6 TCs)
@@ -32,7 +36,6 @@ End-to-end UI automation built with **Cypress + JavaScript**, applying the **Pag
 - [x] ABB Bank — site search (6 TCs)
 - [x] Rabitabank — site navigation (8 TCs)
 - [x] Tap.az — search and category browse (10 TCs)
-- [ ] Automation Exercise — checkout & payment
 - [ ] Demoblaze — product browse + cart
 - [ ] Tap.az — listing detail page
 
@@ -149,6 +152,7 @@ npm run cy:run             # Headless
 
 npm run test:demoblaze          # Only Demoblaze specs
 npm run test:automationexercise # Only Automation Exercise specs
+npm run test:saucedemo          # Only SauceDemo specs (full purchase flow)
 npm run test:abbbank            # Only ABB Bank specs (production banking)
 npm run test:rabitabank         # Only Rabitabank specs (production banking)
 npm run test:tapaz              # Only Tap.az specs (production AZ e-commerce)

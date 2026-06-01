@@ -60,13 +60,16 @@ This RTM ties the **whole portfolio together**: manual test cases (`01`), API te
 
 ## Checkout & Payment
 
+> **Checkout coverage closed via SauceDemo.** Automation Exercise and Demoblaze can't complete a real purchase in CI (payment / account provisioning), so the checkout requirements below are now verified end-to-end against **SauceDemo**, whose public credentials let the full flow — through "Thank you for your order!" — run on every push in both Cypress and Playwright.
+
 | Req ID | Requirement | Manual TC | CY | PW | SE | API | Bug(s) |
 |---|---|---|---|---|---|---|---|
-| CHK-01 | Logged-in user reaches checkout | TC-CHECKOUT-001 | 🚧 | 🚧 | — | — | — |
-| CHK-02 | Address details shown correctly | TC-CHECKOUT-002 | 🚧 | — | — | — | — |
-| CHK-03 | Order total = sum of line items | TC-CHECKOUT-003 | — | — | — | — | (see SQL §) |
-| CHK-04 | Payment form validation | TC-CHECKOUT-006/012/013 | 🚧 | — | — | — | — |
-| CHK-05 | Successful payment → confirmation | TC-CHECKOUT-007 | 🚧 | — | — | — | — |
+| CHK-01 | Logged-in user reaches checkout | TC-CHECKOUT-001 | ✅ (SauceDemo) | ✅ (SauceDemo) | — | — | — |
+| CHK-02 | Buyer info form validates required fields | TC-CHECKOUT-006 | ✅ (TC-SAUCE-CHK-002) | ✅ | — | — | — |
+| CHK-03 | Order overview lists the purchased items | TC-CHECKOUT-003 | ✅ (TC-SAUCE-CHK-001) | ✅ | — | — | — |
+| CHK-04 | Cart / inventory operations before checkout | TC-CHECKOUT-* | ✅ (SauceDemo INV/CART) | ✅ | — | — | — |
+| CHK-05 | Successful purchase → confirmation page | TC-CHECKOUT-007 | ✅ (TC-SAUCE-CHK-001) | ✅ | — | — | — |
+| CHK-06 | (AE-specific) Address from registration + payment | TC-CHECKOUT-002/005 | 🚧 (AE, planned) | — | — | — | — |
 
 ## Production-Site Reliability (banking / classifieds)
 

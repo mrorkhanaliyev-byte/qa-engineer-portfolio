@@ -11,6 +11,7 @@
     "test:webkit": "playwright test --project=webkit",
     "test:demoblaze": "playwright test tests/demoblaze",
     "test:ae": "playwright test tests/automationexercise",
+    "test:saucedemo": "playwright test tests/saucedemo",
     "test:a11y": "playwright test tests/accessibility --project=chromium",
     "report": "playwright show-report",
     "trace": "playwright show-trace"

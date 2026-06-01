@@ -47,6 +47,24 @@ export const automationexercise = {
 } as const
 
 /**
+ * SauceDemo credentials are PUBLIC and fixed — no provisioning needed,
+ * so the full authenticated checkout flow runs in CI. Password is
+ * 'secret_sauce' for every user.
+ */
+export const saucedemo = {
+  password: 'secret_sauce',
+  standard: 'standard_user',
+  lockedOut: 'locked_out_user',
+  problem: 'problem_user',
+  wrongPassword: 'definitely_wrong_password',
+  buyer: {
+    firstName: 'Orkhan',
+    lastName: 'Aliyev',
+    postalCode: 'AZ1000',
+  },
+} as const
+
+/**
  * Auth-dependent tests can't run in CI (we have no way to provision
  * accounts there). Use the SKIP_AUTH constant to gate them:
  *

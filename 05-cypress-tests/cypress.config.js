@@ -8,14 +8,18 @@ module.exports = defineConfig({
     viewportWidth: 1440,
     viewportHeight: 900,
 
-    // Timeouts tuned for real-world production sites that occasionally lag
+    // Timeouts tuned for real-world production and demo sites that
+    // occasionally lag. pageLoadTimeout is generous (60s) because some
+    // public demo CDNs (e.g. SauceDemo under repeated logins) have slow
+    // windows; a tight timeout there produces false "page failed to
+    // load" failures unrelated to the code under test.
     defaultCommandTimeout: 10000,
-    pageLoadTimeout: 30000,
+    pageLoadTimeout: 60000,
     requestTimeout: 15000,
 
     // Retries keep flaky third-party sites from breaking CI on transient issues
     retries: {
-      runMode: 2,
+      runMode: 3,
       openMode: 0,
     },
 
