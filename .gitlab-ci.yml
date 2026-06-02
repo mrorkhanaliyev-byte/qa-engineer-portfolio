@@ -19,12 +19,19 @@
 stages:
   - test
 
-# Only build pipelines for the default branch and merge requests —
-# not for every random branch push.
+# Only build a pipeline for the default branch / merge requests AND only
+# when something this pipeline actually tests has changed. This prevents
+# empty "pipeline has no jobs" failures on docs-only pushes.
 workflow:
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+      changes: &relevant
+        - 03-sql-queries/**/*
+        - 04-postman-api-testing/**/*
+        - 08-performance-k6/**/*
+        - .gitlab-ci.yml
     - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+      changes: *relevant
 
 sql-validation:
   stage: test
