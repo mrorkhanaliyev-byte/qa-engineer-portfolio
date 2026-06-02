@@ -7,6 +7,7 @@
 [![Accessibility](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/accessibility.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/accessibility.yml)
 [![Newman API](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml)
 [![SQL Queries](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/sql.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/sql.yml)
+[![k6 Performance](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/k6.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/k6.yml)
 
 ![Manual Testing](https://img.shields.io/badge/Manual_Testing-✓-success)
 ![Jira](https://img.shields.io/badge/Jira-0052CC?logo=jira&logoColor=white)
@@ -16,6 +17,7 @@
 ![Playwright](https://img.shields.io/badge/Playwright-2EAD33?logo=playwright&logoColor=white)
 ![Selenium](https://img.shields.io/badge/Selenium-43B02A?logo=selenium&logoColor=white)
 ![Java](https://img.shields.io/badge/Java-ED8B00?logo=openjdk&logoColor=white)
+![k6](https://img.shields.io/badge/k6-7D64FF?logo=k6&logoColor=white)
 ![GitHub Actions](https://img.shields.io/badge/CI-GitHub_Actions-2088FF?logo=githubactions&logoColor=white)
 
 ---
@@ -42,6 +44,7 @@ Each section covers a distinct QA discipline. Together they tell one story: **a 
 | 05 | [Cypress E2E](./05-cypress-tests/) | UI automation, Page Object Model | Cypress, JavaScript |
 | 06 | [Playwright E2E](./06-playwright-tests/) | Cross-browser automation, fixtures | Playwright, TypeScript |
 | 07 | [Selenium + Java](./07-selenium-java/) 🚧 | Hybrid framework, TestNG, Page Objects (in progress, built alongside course) | Selenium 4, Java 17, TestNG, Maven |
+| 08 | [Performance (k6)](./08-performance-k6/) | Smoke / load / stress, thresholds as gates, per-endpoint budgets | k6, JavaScript |
 
 Each section has its own README with run instructions and screenshots.
 
@@ -60,7 +63,8 @@ Each section has its own README with run instructions and screenshots.
 - **Playwright cross-browser suite** in **TypeScript** — mirrors the Cypress login + cart + **full SauceDemo checkout** flows on **Chromium, Firefox, and WebKit (Safari)** in a parallel CI matrix; Trace Viewer artifacts on failure
 - **Accessibility audit (WCAG 2.1 AA)** with `@axe-core/playwright` — 7 page audits across AE + Demoblaze, baseline-as-regression-gate so CI catches a11y debt growing without failing on every minor warning; full findings documented in [`AUDIT-RESULTS.md`](./06-playwright-tests/AUDIT-RESULTS.md)
 - **Selenium 4 + Java 17 + TestNG framework** *(in progress alongside a Java Core + Selenium course)* — `DriverFactory`, `BaseTest`, hand-rolled POM, 6 Demoblaze login tests mirroring the same TC IDs as the Cypress and Playwright suites; same flow testable in **3 languages** for a side-by-side comparison
-- **GitHub Actions CI** runs Cypress, Playwright (×3 browsers), Newman, AND SQL on every push, uploads reports as artifacts, and shows four live green badges in this README
+- **Performance suite with k6** — smoke / load / stress scripts against the **same restful-booker API** tested functionally in section 04 ("does it work?" *and* "does it hold up?"); thresholds used as **build-failing gates**, **per-endpoint (tagged) latency budgets**, and two real findings surfaced just by load-testing (the API defaults to **XML** without an `Accept` header; the free dyno's **cold-start** made it look slower at 1 user than at 10). Smoke-only in CI to stay a respectful citizen on a public server
+- **GitHub Actions CI** runs Cypress, Playwright (×3 browsers), Newman, SQL, AND k6 on every push, uploads reports as artifacts, and shows six live green badges in this README
 
 ---
 

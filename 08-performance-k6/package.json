@@ -1,0 +1,18 @@
+{
+  "name": "qa-engineer-portfolio-k6",
+  "version": "1.0.0",
+  "private": true,
+  "description": "k6 performance test suite (smoke / load / stress) for the restful-booker API — part of the QA Engineer Portfolio. k6 itself is a standalone binary; these npm scripts are just convenience wrappers.",
+  "scripts": {
+    "smoke": "k6 run tests/smoke.js",
+    "load": "k6 run tests/load.js",
+    "stress": "k6 run tests/stress.js",
+    "smoke:json": "k6 run --summary-export=results/smoke-summary.json tests/smoke.js"
+  },
+  "keywords": [
+    "k6",
+    "performance-testing",
+    "load-testing",
+    "qa"
+  ]
+}

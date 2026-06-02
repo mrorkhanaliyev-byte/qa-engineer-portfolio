@@ -1,0 +1,7 @@
+# k6 local run output
+results/
+*.summary.json
+
+# editor / OS noise
+.DS_Store
+node_modules/

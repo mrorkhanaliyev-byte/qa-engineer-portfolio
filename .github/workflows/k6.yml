@@ -1,0 +1,51 @@
+name: k6 Performance
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '08-performance-k6/**'
+      - '.github/workflows/k6.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - '08-performance-k6/**'
+      - '.github/workflows/k6.yml'
+  workflow_dispatch:
+
+jobs:
+  k6-smoke:
+    name: k6 smoke test (restful-booker)
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: 08-performance-k6
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install k6
+        uses: grafana/setup-k6-action@v1
+
+      # CI runs the SMOKE test ONLY — 1 VU, a handful of iterations.
+      # The load and stress scripts are intentionally NOT run in CI: they
+      # would repeatedly hammer a FREE public shared server on every push,
+      # which would be abusive. They are meant to be run locally and
+      # deliberately. The smoke test is the right CI gate: it proves the
+      # API still serves a single user cleanly (functional + latency)
+      # on every change, at negligible cost to the public demo.
+      - name: Run k6 smoke test
+        run: |
+          mkdir -p results
+          k6 run --summary-export=results/smoke-summary.json tests/smoke.js
+
+      - name: Upload k6 summary
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: k6-smoke-summary
+          path: 08-performance-k6/results/smoke-summary.json
+          if-no-files-found: ignore
+          retention-days: 14
