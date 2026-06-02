@@ -48,13 +48,20 @@ Each section covers a distinct QA discipline. Together they tell one story: **a 
 
 Each section has its own README with run instructions and screenshots.
 
+**Cross-cutting documents** tie the sections together:
+
+- 🧭 **[Master Test Strategy](./TEST-STRATEGY.md)** — the portfolio-wide defense-in-depth quality model: how all 8 layers fit, the risk-based coverage decisions, and the CI gate architecture
+- 🔗 **[Requirements Traceability Matrix](./01-manual-testing/requirements-traceability-matrix.md)** — every requirement → manual TC → automated test (CY/PW/SE/API/k6) → bug, in one view (63 requirements)
+- 📋 **[Test Plan](./01-manual-testing/test-plan.md)** · **[Cycle 1 Execution Summary](./01-manual-testing/test-execution-summary.md)** — the per-cycle plan and results with a go/no-go recommendation
+
 ---
 
 ## Highlights
 
 - **65 manual test cases** covering login, registration, search, cart, and checkout flows
 - **6 documented bug reports** — two user-enumeration security findings (one UI, one API), a 404 broken-links finding on a production bank, a WCAG accessibility failure, a cart-persistence bug, and a UX whitespace bug — each surfaced through a *different* testing layer
-- **Requirements Traceability Matrix** mapping 46 requirements → test cases → automated tests → bugs across all sections, plus a **Cycle 1 test execution summary** with metrics and a go/no-go recommendation
+- **Master Test Strategy** — a portfolio-wide, defense-in-depth quality model showing how all 8 sections layer into one approach (the same requirement verified at manual / API / UI / security layers), the real risk-based coverage trade-offs, and the CI gate architecture
+- **Requirements Traceability Matrix** mapping **63 requirements** → test cases → automated tests (Cypress / Playwright / Selenium / API / **k6**) → bugs across all sections, plus a **Cycle 1 test execution summary** with metrics and a go/no-go recommendation
 - **Smoke + regression checklists** with P0/P1/P2 prioritization
 - **Jira workflow** — custom bug-lifecycle diagram (Mermaid), 15+ JQL queries grouped by daily use case, drag-droppable CSV that imports the bug reports as real Jira tickets
 - **Cypress E2E framework** with Page Object Model and Mochawesome reporting — 12 specs across 7 sites (SauceDemo, Demoblaze, Automation Exercise login+cart, **two production banks** ABB Bank + Rabitabank, Tap.az, The Internet), **89 test cases** — including a **complete SauceDemo purchase flow through order confirmation** and advanced **element-handling techniques** (iframes, JS alerts, async waits, file upload, multi-window) on The Internet playground

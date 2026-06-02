@@ -2,10 +2,10 @@
 
 > A RTM answers one question a manager always asks: **"How do we know this requirement is actually tested?"** It maps every requirement to the test cases that verify it, the automated tests that guard it, and the bugs found against it — so coverage gaps and untested requirements are impossible to hide.
 
-This RTM ties the **whole portfolio together**: manual test cases (`01`), API tests (`04`), Cypress (`05`), Playwright (`06`), Selenium (`07`), and the bug reports — all in one view.
+This RTM ties the **whole portfolio together**: manual test cases (`01`), API tests (`04`), Cypress (`05`), Playwright (`06`), Selenium (`07`), performance (`08`), and the bug reports — all in one view.
 
 **Legend:**
-`M` = Manual TC · `CY` = Cypress · `PW` = Playwright · `SE` = Selenium · `API` = Postman/Newman · `A11Y` = accessibility audit
+`M` = Manual TC · `CY` = Cypress · `PW` = Playwright · `SE` = Selenium · `API` = Postman/Newman · `K6` = k6 performance · `A11Y` = accessibility audit
 ✅ covered · 🚧 planned · — not applicable
 
 ---
@@ -71,6 +71,23 @@ This RTM ties the **whole portfolio together**: manual test cases (`01`), API te
 | CHK-05 | Successful purchase → confirmation page | TC-CHECKOUT-007 | ✅ (TC-SAUCE-CHK-001) | ✅ | — | — | — |
 | CHK-06 | (AE-specific) Address from registration + payment | TC-CHECKOUT-002/005 | 🚧 (AE, planned) | — | — | — | — |
 
+## Booking Management API (restful-booker)
+
+> A *proper* REST API — token auth + full CRUD — tested on **two axes**: functionally with Postman/Newman (`04`) and under load with k6 (`08`). The `K6` column shows which CRUD operations the performance suite also exercises (the smoke test runs a real create→read→delete against a booking it owns).
+
+| Req ID | Requirement | API (Newman) | K6 (perf) | Bug(s) |
+|---|---|---|---|---|
+| BOOK-01 | Valid admin credentials issue an auth token | ✅ | ✅ (smoke) | — |
+| BOOK-02 | Create booking returns a new id (201-style) | ✅ | ✅ (smoke) | — |
+| BOOK-03 | Booking is retrievable by id, fields match | ✅ | ✅ (smoke) | — |
+| BOOK-04 | List + filter return the created booking | ✅ | ✅ (load: browse) | — |
+| BOOK-05 | Full update (PUT) requires a valid token | ✅ | — | — |
+| BOOK-06 | Partial update (PATCH) changes only sent fields | ✅ | — | — |
+| BOOK-07 | Delete requires a token, returns 201, record then 404s | ✅ | ✅ (smoke: cleanup) | — |
+| BOOK-08 | Write without a token → 403 Forbidden | ✅ | — | — |
+| BOOK-09 | Read of a non-existent id → 404 Not Found | ✅ | — | — |
+| BOOK-10 | Health endpoint (`/ping`) returns 201 | ✅ | ✅ (smoke + load) | — |
+
 ## Production-Site Reliability (banking / classifieds)
 
 | Req ID | Requirement | Manual TC | CY | PW | SE | API | Bug(s) |
@@ -99,6 +116,21 @@ This RTM ties the **whole portfolio together**: manual test cases (`01`), API te
 | A11Y-02 | No NEW critical violations per page | a11y baseline gate | — |
 | A11Y-03 | Form inputs have labels | a11y audit (serious findings logged) | (tracked in AUDIT-RESULTS.md) |
 
+## Performance / Non-functional (verified with k6)
+
+> Same restful-booker API as the Booking-API group above — here under load. Only the smoke test is a CI gate; load/stress are deliberate local runs against a free public server.
+
+| Req ID | Requirement | Verified by | Threshold (gate) | Runs in CI? |
+|---|---|---|---|---|
+| PERF-01 | API serves a single user cleanly (functional smoke) | `08/tests/smoke.js` | checks >99%, http_req_failed <1% | ✅ |
+| PERF-02 | Controlled write path stays fast | `08/tests/smoke.js` | `create_booking_duration` p(95) <3s | ✅ |
+| PERF-03 | Read endpoints hold latency under expected load (10 VUs) | `08/tests/load.js` | per-endpoint tagged p(95) budgets | ❌ (local) |
+| PERF-04 | Error rate stays <1% under expected load | `08/tests/load.js` | `http_req_failed` <0.01 | ❌ (local) |
+| PERF-05 | Business read-flow succeeds under load | `08/tests/load.js` | `read_flow_errors` <0.05 | ❌ (local) |
+| PERF-06 | Degradation point identified under stress (≤25 VUs) | `08/tests/stress.js` | tolerant: `http_req_failed` <0.25 | ❌ (local) |
+
+**Findings surfaced by performance testing:** restful-booker defaults to **XML** without an `Accept` header (k6 vs Postman); the free dyno's **cold-start** made it slower at 1 VU than at 10. Both documented in `08/README.md`.
+
 ---
 
 ## Coverage summary
@@ -109,16 +141,20 @@ This RTM ties the **whole portfolio together**: manual test cases (`01`), API te
 | Registration | 5 | 2 (API) | 3 (UI automation) | 0 |
 | Search | 5 | 4 | 1 | 0 |
 | Cart | 8 | 7 | 1 (known bug) | 1 |
-| Checkout | 5 | 0 | 5 (planned) | 0 |
+| Checkout | 6 | 5 (SauceDemo) | 1 (AE-specific) | 0 |
+| Booking API (restful-booker) | 10 | 10 | 0 | 0 |
 | Production reliability | 5 | 5 | 0 | 1 |
 | Data integrity | 5 | 5 | 0 | (5 planted, all caught) |
 | Accessibility | 3 | 2 | 1 | 1 |
-| **Total** | **46** | **33** | **13** | **6** |
+| Performance (k6) | 6 | 6 | 0 | 0 |
+| **Total** | **63** | **54** | **9** | **6** |
 
 ## How to read the gaps
 
-- **Checkout (CHK-*)** is the biggest open area — manual test cases exist (TC-CHECKOUT-001..014) but UI automation is planned, not built. This is the honest next-priority for the automation suites.
+- **Checkout (CHK-*)** is now covered end-to-end via **SauceDemo** (CHK-01..05, through the order-confirmation page, in both Cypress and Playwright on every push). The only remainder is CHK-06 — the *AE-specific* address-from-registration + payment variant, which AE can't complete in CI; that one stays 🚧.
+- **Registration (REG-*)** is fully covered at the **API** layer (createAccount → get → update → delete chain) but UI automation of the signup form is still planned — the honest next-priority for the UI suites.
 - **Selenium (SE)** column is sparse on purpose — section `07` is in progress alongside a course. Login is covered; the rest follows the course roadmap.
 - **Cart persistence (CART-07)** is deliberately NOT automated as a passing test — doing so would mask **BUG-002**. The ❌ marks intentional, documented non-coverage.
+- **Performance (PERF-03..06)** is intentionally **local-only**, not a CI gate — running load/stress against a free public server on every push would be abusive. PERF-01/02 (smoke) are the CI gate; see [`08/README.md`](../08-performance-k6/README.md).
 
-This matrix is the single source of truth for "what's tested, where, and what broke." It's updated whenever a test case, automated spec, or bug report is added.
+This matrix is the single source of truth for "what's tested, where, and what broke." It's updated whenever a test case, automated spec, or bug report is added — and it now spans all eight sections, from manual design through performance. The portfolio-wide approach that sits above it is documented in the [Master Test Strategy](../TEST-STRATEGY.md).

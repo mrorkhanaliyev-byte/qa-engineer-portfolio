@@ -25,6 +25,8 @@ Three principles guide every choice on this project:
 
 We don't own unit tests, but we **advocate** for them and verify their existence during PR review. UI E2E tests are the most expensive — kept lean, focused on critical journeys.
 
+Alongside the functional pyramid sit two **non-functional gates** that don't fit the layer model: **accessibility** (axe-core, `06`) and **performance** (k6, `08`). They're small in test count but high in signal — a single a11y regression or a blown latency threshold fails the build. The portfolio-wide view of how all of this fits together is the [Master Test Strategy](../TEST-STRATEGY.md).
+
 ## 3. Test Levels & Ownership
 
 | Level | What | Who | Cadence |
@@ -46,10 +48,10 @@ We don't own unit tests, but we **advocate** for them and verify their existence
 - **State-based** — workflows that span multiple screens / sessions
 
 ### Non-functional
-- **Compatibility** — Chrome / Firefox / Edge, desktop & mobile viewports
-- **Accessibility** — basic checks (keyboard nav, alt text, contrast). Full WCAG audit is out of scope.
+- **Compatibility** — Chrome / Firefox / Edge / WebKit, desktop & mobile viewports (Playwright matrix, `06`).
+- **Accessibility** — WCAG 2.1 AA audits with `@axe-core/playwright`: 7 page audits, baseline-as-regression gate, findings in [`06/AUDIT-RESULTS.md`](../06-playwright-tests/AUDIT-RESULTS.md). *(Scope expanded from "basic checks" in a later cycle.)*
 - **Usability** — informal heuristic checks (Nielsen's 10)
-- **Performance** — page-load smoke checks only; deep perf testing is out of scope.
+- **Performance** — k6 smoke / load / stress against the restful-booker API (`08`): thresholds-as-gates, per-endpoint latency budgets, smoke-only in CI. *(Expanded from "page-load smoke only" in a later cycle.)*
 
 ## 5. Test Environments
 
@@ -92,6 +94,8 @@ We don't own unit tests, but we **advocate** for them and verify their existence
 | UI automation (JS) | Cypress | Fast feedback, great DX |
 | UI automation (TS, cross-browser) | Playwright | True multi-browser, parallel by default |
 | UI automation (Java) | Selenium + TestNG | Enterprise reach, broad ecosystem |
+| Accessibility | axe-core (via Playwright) | De-facto WCAG rules engine, CI-friendly |
+| Performance | Grafana k6 | Scriptable JS, thresholds-as-code, CI-native |
 | Data validation | SQL (MySQL / Postgres) | Direct verification of system state |
 | Reporting | Mochawesome / Allure | Rich, shareable HTML |
 | CI/CD | GitHub Actions | Free, integrated with this repo |
