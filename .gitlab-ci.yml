@@ -1,0 +1,67 @@
+# ============================================================
+# GitLab CI — mirror of the FAST, headless GitHub Actions suites.
+#
+# This portfolio is dual-hosted (GitHub + GitLab). The browser E2E
+# suites (Cypress, Playwright) and the accessibility audit run on
+# GitHub Actions. Here on GitLab we run the dependency-light, headless
+# suites so the GitLab mirror also shows green pipelines — and to
+# demonstrate GitLab CI, not just GitHub Actions.
+#
+# Jobs:
+#   • sql-validation — SQLite query harness (stdlib only)
+#   • newman-api     — both Postman collections via Newman
+#   • k6-smoke       — k6 performance smoke test (1 VU)
+#
+# Path rules keep each job scoped to its own section (plus this file),
+# mirroring the path-scoped triggers on the GitHub workflows.
+# ============================================================
+
+stages:
+  - test
+
+# Only build pipelines for the default branch and merge requests —
+# not for every random branch push.
+workflow:
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
+    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
+
+sql-validation:
+  stage: test
+  image: python:3.12-slim
+  script:
+    - cd 03-sql-queries
+    - python -c "import sqlite3; print('sqlite3', sqlite3.sqlite_version)"
+    - python scripts/run_all_queries.py
+  rules:
+    - changes:
+        - 03-sql-queries/**/*
+        - .gitlab-ci.yml
+
+newman-api:
+  stage: test
+  image: node:20-slim
+  script:
+    - cd 04-postman-api-testing
+    - npm ci
+    # --env-var CI=true makes the verifyLogin (valid creds) test skip
+    # itself when AE's user is not provisioned — same as on GitHub.
+    - npm test
+  rules:
+    - changes:
+        - 04-postman-api-testing/**/*
+        - .gitlab-ci.yml
+
+k6-smoke:
+  stage: test
+  image:
+    name: grafana/k6:latest
+    entrypoint: [""]
+  script:
+    - cd 08-performance-k6
+    # Smoke ONLY — never run load/stress in CI against a public server.
+    - k6 run tests/smoke.js
+  rules:
+    - changes:
+        - 08-performance-k6/**/*
+        - .gitlab-ci.yml

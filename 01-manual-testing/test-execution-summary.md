@@ -12,6 +12,8 @@
 
 ---
 
+> **📌 This is the Cycle 1 report (closed 2026-05-30).** The portfolio has grown since — see the **[Addendum — Cycle 2 delta](#addendum--cycle-2-delta-2026-06-02)** at the end for what changed (checkout coverage closed, API suite doubled, performance + accessibility added, a 6th CI workflow). The Cycle 1 body below is preserved as an accurate snapshot of its time.
+
 ## 1. Purpose
 
 This report summarizes the results of the first end-to-end test cycle across all in-scope applications. It states what was tested, the pass/fail/blocked outcome, the defects found, and a go / no-go recommendation against the exit criteria from the [test plan](./test-plan.md).
@@ -123,3 +125,36 @@ The critical path (login → browse → cart → guest-checkout prompt) is verif
 | QA | Orkhan Aliyev | 2026-05-30 | ☑ |
 | Product Owner | TBD | | ☐ |
 | Engineering Lead | TBD | | ☐ |
+
+---
+
+## Addendum — Cycle 2 delta (2026-06-02)
+
+The sections below the Cycle 1 sign-off are a snapshot of 2026-05-30. Since then the portfolio expanded; this addendum records what changed so the report stays useful without rewriting history.
+
+### What closed or grew
+
+| Area | Cycle 1 status | Now |
+|---|---|---|
+| **Checkout** | Automation *planned* (manual TCs only) | **Closed** end-to-end via SauceDemo — full purchase through *"Thank you for your order!"* in Cypress **and** Playwright, on every push (RTM CHK-01..05 ✅) |
+| **API suite** | 1 collection — Automation Exercise (14 req / 42 assertions) | **2 collections** — added **restful-booker** (token auth, full CRUD, 403/404). **27 requests / 65+ assertions** |
+| **Performance** | Out of scope | **Built** — k6 smoke / load / stress (section `08`); smoke is a CI gate (40/40 checks), load verified locally (1308/1308 checks, 0 failures) |
+| **UI breadth** | 10 specs | **12 Cypress specs / 82 cases** + The Internet element-handling playground (iframes, alerts, file upload, multi-window) |
+| **CI workflows** | 5 green | **6 green** (added `k6.yml`); GitLab CI mirror added for the headless suites |
+| **Strategy docs** | RTM + plan + strategy | + root **[Master Test Strategy](../TEST-STRATEGY.md)**; RTM grown to **63 requirements** incl. Booking-API and Performance groups |
+
+### Updated automated-suite snapshot (latest CI run)
+
+| Suite | Result |
+|---|---|
+| Cypress (12 specs) | green |
+| Playwright (×3 browsers) | green |
+| Playwright accessibility (7 audits) | green |
+| Newman API (2 collections, 27 req) | green |
+| SQL validation (19 queries) | green |
+| **k6 performance smoke** (new) | green |
+| Selenium (in progress, local) | 6/6 |
+
+### What this means for the recommendation
+
+The single largest Cycle 1 gap — **checkout automation** — is now closed for the SauceDemo target, and the **performance** dimension that was explicitly out of scope is now a CI-gated reality. The Cycle 1 **GO, with conditions** stands; condition #2 (build checkout automation) is **met**. Conditions #1 (user-enumeration fixes) and #3 (alt-text) remain open on the *target applications* — they are application bugs, not test-suite gaps, and stay tracked in the bug reports.

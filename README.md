@@ -8,6 +8,9 @@
 [![Newman API](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml)
 [![SQL Queries](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/sql.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/sql.yml)
 [![k6 Performance](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/k6.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/k6.yml)
+[![GitLab pipeline](https://gitlab.com/orkhanaliyev/qa-engineer-portfolio/badges/main/pipeline.svg)](https://gitlab.com/orkhanaliyev/qa-engineer-portfolio/-/pipelines)
+
+> Dual-hosted on **[GitHub](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio)** and **[GitLab](https://gitlab.com/orkhanaliyev/qa-engineer-portfolio)**. Six GitHub Actions workflows run the full suite (incl. browser E2E); GitLab CI mirrors the fast headless suites (SQL, API, k6 smoke).
 
 ![Manual Testing](https://img.shields.io/badge/Manual_Testing-✓-success)
 ![Jira](https://img.shields.io/badge/Jira-0052CC?logo=jira&logoColor=white)
@@ -64,7 +67,7 @@ Each section has its own README with run instructions and screenshots.
 - **Requirements Traceability Matrix** mapping **63 requirements** → test cases → automated tests (Cypress / Playwright / Selenium / API / **k6**) → bugs across all sections, plus a **Cycle 1 test execution summary** with metrics and a go/no-go recommendation
 - **Smoke + regression checklists** with P0/P1/P2 prioritization
 - **Jira workflow** — custom bug-lifecycle diagram (Mermaid), 15+ JQL queries grouped by daily use case, drag-droppable CSV that imports the bug reports as real Jira tickets
-- **Cypress E2E framework** with Page Object Model and Mochawesome reporting — 12 specs across 7 sites (SauceDemo, Demoblaze, Automation Exercise login+cart, **two production banks** ABB Bank + Rabitabank, Tap.az, The Internet), **89 test cases** — including a **complete SauceDemo purchase flow through order confirmation** and advanced **element-handling techniques** (iframes, JS alerts, async waits, file upload, multi-window) on The Internet playground
+- **Cypress E2E framework** with Page Object Model and Mochawesome reporting — 12 specs across 7 sites (SauceDemo, Demoblaze, Automation Exercise login+cart, **two production banks** ABB Bank + Rabitabank, Tap.az, The Internet), **82 test cases** — including a **complete SauceDemo purchase flow through order confirmation** and advanced **element-handling techniques** (iframes, JS alerts, async waits, file upload, multi-window) on The Internet playground
 - **Postman + Newman API suite** — **two** API targets: Automation Exercise's 14 endpoints (always-200 quirk, chained user lifecycle) **and** the restful-booker REST API (token auth, full CRUD POST/GET/PUT/PATCH/DELETE, real 403/404 negative cases) — 27 requests, 65+ assertions, both green in CI
 - **SQL validation suite** — SQLite e-commerce schema, 19 queries (basic / joins / subqueries / window functions / QA validation), 5 intentionally planted data-quality bugs that the validation queries surface, runs in <10s
 - **Playwright cross-browser suite** in **TypeScript** — mirrors the Cypress login + cart + **full SauceDemo checkout** flows on **Chromium, Firefox, and WebKit (Safari)** in a parallel CI matrix; Trace Viewer artifacts on failure
@@ -143,4 +146,4 @@ newman run collections/automation-exercise-api.postman_collection.json
 
 ## License
 
-This portfolio is for educational and demonstration purposes. Test targets are public demo sites that explicitly permit automated testing.
+Released under the [MIT License](./LICENSE) — free to read, reuse, and learn from. This portfolio is for educational and demonstration purposes; test targets are public demo sites that explicitly permit automated testing, and production sites (ABB, Rabitabank, Tap.az) are exercised read-only.
