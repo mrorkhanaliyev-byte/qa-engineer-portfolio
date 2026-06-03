@@ -1,37 +1,33 @@
 # ============================================================
-# GitLab CI — mirror of the FAST, headless GitHub Actions suites.
+# GitLab CI — MANUAL-trigger mirror of the fast, headless suites.
 #
-# This portfolio is dual-hosted (GitHub + GitLab). The browser E2E
-# suites (Cypress, Playwright) and the accessibility audit run on
-# GitHub Actions. Here on GitLab we run the dependency-light, headless
-# suites so the GitLab mirror also shows green pipelines — and to
-# demonstrate GitLab CI, not just GitHub Actions.
+# This portfolio is dual-hosted (GitHub + GitLab). All automated CI runs
+# on **GitHub Actions** (6 path-scoped workflows, incl. browser E2E).
+#
+# This file is a GitLab-native mirror of the dependency-light suites
+# (SQL, Newman API, k6 smoke) kept to demonstrate GitLab CI authoring.
+# It is set to **manual trigger only** ("Run pipeline" in the GitLab UI)
+# so it never auto-runs on push: GitLab.com free-tier shared runners
+# require one-time account identity verification before they execute, and
+# we don't want red auto-pipelines on every commit. Once shared runners
+# are enabled on the account, click **Build → Pipelines → Run pipeline**
+# (branch: main) and all three jobs run green.
 #
 # Jobs:
-#   • sql-validation — SQLite query harness (stdlib only)
+#   • sql-validation — SQLite query harness (Python stdlib only)
 #   • newman-api     — both Postman collections via Newman
 #   • k6-smoke       — k6 performance smoke test (1 VU)
-#
-# Path rules keep each job scoped to its own section (plus this file),
-# mirroring the path-scoped triggers on the GitHub workflows.
 # ============================================================
 
 stages:
   - test
 
-# Only build a pipeline for the default branch / merge requests AND only
-# when something this pipeline actually tests has changed. This prevents
-# empty "pipeline has no jobs" failures on docs-only pushes.
+# Only create a pipeline when triggered MANUALLY from the GitLab UI
+# (source == "web"). Pushes and merge requests do NOT auto-create a
+# pipeline — so no failed pipelines pile up while runners are disabled.
 workflow:
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event"'
-      changes: &relevant
-        - 03-sql-queries/**/*
-        - 04-postman-api-testing/**/*
-        - 08-performance-k6/**/*
-        - .gitlab-ci.yml
-    - if: '$CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH'
-      changes: *relevant
+    - if: '$CI_PIPELINE_SOURCE == "web"'
 
 sql-validation:
   stage: test
@@ -40,10 +36,6 @@ sql-validation:
     - cd 03-sql-queries
     - python -c "import sqlite3; print('sqlite3', sqlite3.sqlite_version)"
     - python scripts/run_all_queries.py
-  rules:
-    - changes:
-        - 03-sql-queries/**/*
-        - .gitlab-ci.yml
 
 newman-api:
   stage: test
@@ -54,10 +46,6 @@ newman-api:
     # --env-var CI=true makes the verifyLogin (valid creds) test skip
     # itself when AE's user is not provisioned — same as on GitHub.
     - npm test
-  rules:
-    - changes:
-        - 04-postman-api-testing/**/*
-        - .gitlab-ci.yml
 
 k6-smoke:
   stage: test
@@ -68,7 +56,3 @@ k6-smoke:
     - cd 08-performance-k6
     # Smoke ONLY — never run load/stress in CI against a public server.
     - k6 run tests/smoke.js
-  rules:
-    - changes:
-        - 08-performance-k6/**/*
-        - .gitlab-ci.yml

@@ -10,7 +10,7 @@
 [![k6 Performance](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/k6.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/k6.yml)
 [![GitLab CI](https://img.shields.io/badge/GitLab_CI-configured-FC6D26?logo=gitlab&logoColor=white)](https://gitlab.com/orkhanaliyev/qa-engineer-portfolio/-/blob/main/.gitlab-ci.yml)
 
-> Dual-hosted on **[GitHub](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio)** and **[GitLab](https://gitlab.com/orkhanaliyev/qa-engineer-portfolio)**. Six GitHub Actions workflows run the full suite (incl. browser E2E); **[`.gitlab-ci.yml`](./.gitlab-ci.yml)** mirrors the fast headless suites (SQL, API, k6 smoke) on GitLab CI.
+> Dual-hosted on **[GitHub](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio)** and **[GitLab](https://gitlab.com/orkhanaliyev/qa-engineer-portfolio)**. All automated CI runs on **GitHub Actions** (six path-scoped workflows, incl. browser E2E); a manual-trigger **[`.gitlab-ci.yml`](./.gitlab-ci.yml)** mirrors the fast headless suites (SQL, API, k6 smoke) on GitLab CI.
 
 ![Manual Testing](https://img.shields.io/badge/Manual_Testing-✓-success)
 ![Jira](https://img.shields.io/badge/Jira-0052CC?logo=jira&logoColor=white)
