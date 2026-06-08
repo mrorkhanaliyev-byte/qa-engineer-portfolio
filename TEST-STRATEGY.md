@@ -93,8 +93,11 @@ Every layer that *can* be automated runs in CI on every push, path-scoped so eac
 | `newman.yml` | `04-postman-api-testing/**` | 2 collections | API contract |
 | `sql.yml` | `03-sql-queries/**` | 19 queries / 5 planted bugs | data integrity |
 | `k6.yml` | `08-performance-k6/**` | smoke (1 VU) | performance smoke |
+| `selenium.yml` | `07-selenium-java/**` | SauceDemo login / inventory / cart (headless) | enterprise-stack regression |
 
-**Six green badges** on the main README are the at-a-glance build-health signal. Reports (Mochawesome, Playwright traces, Newman HTML/JUnit, k6 summary) upload as artifacts on every run — green is necessary, evidence is retained.
+**Seven green badges** on the main README are the at-a-glance build-health signal. Reports (Mochawesome, Playwright traces, Newman HTML/JUnit, k6 summary, Surefire) upload as artifacts on every run — green is necessary, evidence is retained.
+
+> The Selenium workflow gates on the deterministic SauceDemo subset; the full multi-step checkout is flaky against the throttled public server and runs locally — a flaky test in a *blocking* gate is worse than a smaller reliable one. That scoping decision is itself part of the strategy.
 
 The principle: **a test is only a gate if it can fail the build.** k6 thresholds exit non-zero; the a11y baseline fails on *new* critical violations; SQL validation fails if a planted-bug query returns rows. None of these are reports you have to remember to read.
 

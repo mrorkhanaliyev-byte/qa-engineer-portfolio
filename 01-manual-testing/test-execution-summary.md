@@ -12,7 +12,7 @@
 
 ---
 
-> **📌 This is the Cycle 1 report (closed 2026-05-30).** The portfolio has grown since — see the **[Addendum — Cycle 2 delta](#addendum--cycle-2-delta-2026-06-02)** at the end for what changed (checkout coverage closed, API suite doubled, performance + accessibility added, a 6th CI workflow). The Cycle 1 body below is preserved as an accurate snapshot of its time.
+> **📌 This is the Cycle 1 report (closed 2026-05-30).** The portfolio has grown since — see the **[Addendum — Cycle 2 delta](#addendum--cycle-2-delta-2026-06-02)** at the end for what changed (checkout coverage closed, API suite doubled, performance + accessibility added, two more CI workflows — k6 then Selenium). The Cycle 1 body below is preserved as an accurate snapshot of its time.
 
 ## 1. Purpose
 
@@ -140,7 +140,7 @@ The sections below the Cycle 1 sign-off are a snapshot of 2026-05-30. Since then
 | **API suite** | 1 collection — Automation Exercise (14 req / 42 assertions) | **2 collections** — added **restful-booker** (token auth, full CRUD, 403/404). **27 requests / 65+ assertions** |
 | **Performance** | Out of scope | **Built** — k6 smoke / load / stress (section `08`); smoke is a CI gate (40/40 checks), load verified locally (1308/1308 checks, 0 failures) |
 | **UI breadth** | 10 specs | **12 Cypress specs / 82 cases** + The Internet element-handling playground (iframes, alerts, file upload, multi-window) |
-| **CI workflows** | 5 green | **6 green** (added `k6.yml`); GitLab CI mirror added for the headless suites |
+| **CI workflows** | 5 green | **7 green** (added `k6.yml`, then headless-Chrome `selenium.yml`); GitLab CI mirror added for the headless suites |
 | **Strategy docs** | RTM + plan + strategy | + root **[Master Test Strategy](../TEST-STRATEGY.md)**; RTM grown to **63 requirements** incl. Booking-API and Performance groups |
 
 ### Updated automated-suite snapshot (latest CI run)
@@ -153,7 +153,7 @@ The sections below the Cycle 1 sign-off are a snapshot of 2026-05-30. Since then
 | Newman API (2 collections, 27 req) | green |
 | SQL validation (19 queries) | green |
 | **k6 performance smoke** (new) | green |
-| Selenium (in progress, local) | 6/6 |
+| **Selenium (SauceDemo, headless CI)** (new) | green (12/12 in CI; full purchase runs local) |
 
 ### What this means for the recommendation
 

@@ -1,0 +1,60 @@
+name: Selenium Java
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '07-selenium-java/**'
+      - '.github/workflows/selenium.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - '07-selenium-java/**'
+      - '.github/workflows/selenium.yml'
+  workflow_dispatch:
+
+jobs:
+  selenium:
+    name: Selenium + TestNG (SauceDemo, headless Chrome)
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        working-directory: 07-selenium-java
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: maven
+
+      # ubuntu-latest ships Google Chrome stable; WebDriverManager (in the
+      # project) downloads the matching chromedriver at runtime, so no manual
+      # driver setup is needed. Print the version for traceability.
+      - name: Show Chrome version
+        run: google-chrome --version
+
+      # Runs the CI suite (testng-ci.xml): SauceDemo login / inventory / cart,
+      # headless. The two full multi-step checkout cases are in the
+      # `fullPurchase` group and excluded here — against the live, shared
+      # SauceDemo server they stay intermittently flaky in headless CI under the
+      # site's login throttling, and a flaky test in a blocking gate is worse
+      # than a smaller reliable one. The full purchase flow runs in the local
+      # `testng.xml`. The Demoblaze tests are also local-only (they need a
+      # pre-registered account CI can't provision).
+      - name: Run Selenium CI suite (headless)
+        run: mvn -B test -DsuiteXml=testng-ci.xml -Dheadless=true
+
+      - name: Upload TestNG / Surefire reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: selenium-test-reports
+          path: 07-selenium-java/target/surefire-reports/
+          if-no-files-found: ignore
+          retention-days: 14

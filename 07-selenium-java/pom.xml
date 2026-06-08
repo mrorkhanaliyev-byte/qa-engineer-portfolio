@@ -24,6 +24,14 @@
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
+        <!-- Which TestNG suite to run. Default: full local suite.
+             CI overrides with -DsuiteXml=testng-ci.xml (SauceDemo only). -->
+        <suiteXml>testng.xml</suiteXml>
+
+        <!-- Runtime defaults — each overridable on the command line with -D. -->
+        <headless>false</headless>
+        <skipAuth>false</skipAuth>
+
         <!-- Pin versions so CI builds are reproducible. -->
         <selenium.version>4.25.0</selenium.version>
         <testng.version>7.10.2</testng.version>
@@ -81,11 +89,14 @@
                 <version>${maven.surefire.version}</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                        <suiteXmlFile>${suiteXml}</suiteXmlFile>
                     </suiteXmlFiles>
-                    <!-- Pass system properties (e.g. -Dbrowser=chrome) through. -->
+                    <!-- Pass runtime switches through to the tests / DriverFactory.
+                         e.g. -Dbrowser=firefox -Dheadless=true -DskipAuth=true -->
                     <systemPropertyVariables>
                         <browser>${browser}</browser>
+                        <headless>${headless}</headless>
+                        <skipAuth>${skipAuth}</skipAuth>
                     </systemPropertyVariables>
                 </configuration>
             </plugin>

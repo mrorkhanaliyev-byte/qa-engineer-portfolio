@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+
+<!--
+  CI suite — SauceDemo, deterministic subset.
+
+  SauceDemo's credentials are public and fixed, so login / inventory / cart run
+  headless on a GitHub Actions runner with zero account provisioning. The
+  Demoblaze classes are excluded (two of their cases need a pre-registered
+  account CI can't create) — those stay in the local `testng.xml`.
+
+  The `fullPurchase` group (the two complete multi-step checkout cases) is
+  EXCLUDED here on purpose: against the live, shared SauceDemo server those
+  stay intermittently flaky in headless CI under the site's login throttling,
+  and a flaky test in a blocking gate is worse than a smaller reliable one. The
+  full purchase flow still runs in the local `testng.xml`. This is a deliberate
+  test-architecture decision — the POMs and the flow are implemented.
+
+  Used by .github/workflows/selenium.yml via:
+    mvn test -DsuiteXml=testng-ci.xml -Dheadless=true
+-->
+<suite name="QA Portfolio — CI (SauceDemo)" verbose="1">
+
+    <test name="SauceDemo — login / inventory / cart">
+        <groups>
+            <run>
+                <exclude name="fullPurchase"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="tests.saucedemo.LoginTests"/>
+            <class name="tests.saucedemo.CheckoutTests"/>
+        </classes>
+    </test>
+
+</suite>

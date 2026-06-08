@@ -62,8 +62,12 @@ public final class DriverFactory {
     }
 
     private static void applyTimeouts(WebDriver driver) {
-        // Tuned for real production sites that occasionally lag.
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        // Implicit wait stays at ZERO on purpose. Every page object uses
+        // explicit WebDriverWait conditions instead, and mixing the two is a
+        // well-known Selenium anti-pattern: an implicit wait makes findElements()
+        // block for the full timeout on an *expected-empty* result (e.g. "is the
+        // cart empty?"), which both slows the suite and poisons ExpectedConditions
+        // polling. Explicit-only waits keep timing predictable.
         driver.manage().timeouts().pageLoadTimeout(Duration.ofSeconds(30));
         driver.manage().window().setSize(
                 new org.openqa.selenium.Dimension(1440, 900));
