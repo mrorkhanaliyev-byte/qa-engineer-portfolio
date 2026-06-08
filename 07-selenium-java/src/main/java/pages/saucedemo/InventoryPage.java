@@ -1,6 +1,7 @@
 package pages.saucedemo;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -63,32 +64,55 @@ public class InventoryPage {
      * Add a product to the cart, confirming the add registered (the button
      * flips to "Remove"), and retrying if the click was lost.
      *
-     * <p>SauceDemo's React buttons can drop a click before their handler is
-     * fully wired under load, so we verify the outcome and re-click instead of
-     * trusting a single fire — which also keeps the cart-badge read reliable.
+     * <p>SauceDemo's add-to-cart buttons intermittently swallow a native click
+     * in headless CI — the React onClick is wired (sorting works on the same
+     * page) but the click never reaches it, especially on the shared GitHub
+     * Actions IP range the public server throttles. So the first try is a real
+     * click (realistic), and any retry dispatches the click via JavaScript
+     * ({@code arguments[0].click()}), which fires the same handler directly and
+     * bypasses the headless hit-testing quirk. Either way we verify the outcome.
      */
     public InventoryPage addToCart(String slug) {
         By removeBtn = removeButton(slug);
-        for (int attempt = 1; attempt <= 3; attempt++) {
+        for (int attempt = 1; attempt <= 4; attempt++) {
             if (!driver.findElements(removeBtn).isEmpty()) {
                 return this; // already in the cart
             }
-            wait.until(ExpectedConditions.elementToBeClickable(addToCartButton(slug))).click();
+            WebElement button = wait.until(
+                    ExpectedConditions.elementToBeClickable(addToCartButton(slug)));
+            if (attempt == 1) {
+                button.click();
+            } else {
+                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", button);
+            }
             try {
                 new WebDriverWait(driver, Duration.ofSeconds(3))
                         .until(ExpectedConditions.visibilityOfElementLocated(removeBtn));
                 return this;
             } catch (TimeoutException dropped) {
-                // click was lost before React wired up — retry
+                // click didn't register — retry, escalating to a JS click
             }
         }
         throw new IllegalStateException("Add-to-cart did not register for: " + slug);
     }
 
     public InventoryPage openCart() {
-        driver.findElement(CART_LINK).click();
-        wait.until(ExpectedConditions.urlContains("/cart.html"));
-        return this;
+        for (int attempt = 1; attempt <= 3; attempt++) {
+            WebElement link = wait.until(ExpectedConditions.elementToBeClickable(CART_LINK));
+            if (attempt == 1) {
+                link.click();
+            } else {
+                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", link);
+            }
+            try {
+                new WebDriverWait(driver, Duration.ofSeconds(3))
+                        .until(ExpectedConditions.urlContains("/cart.html"));
+                return this;
+            } catch (TimeoutException dropped) {
+                // navigation click swallowed — retry via JS
+            }
+        }
+        throw new IllegalStateException("Could not open the cart");
     }
 
     // ---- Assertions / Queries -------------------------------------

@@ -1,6 +1,8 @@
 package pages.saucedemo;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -39,13 +41,42 @@ public class CartPage {
     // ---- Actions --------------------------------------------------
 
     public CartPage removeItem(String slug) {
-        driver.findElement(removeButton(slug)).click();
-        return this;
+        By removeBtn = removeButton(slug);
+        for (int attempt = 1; attempt <= 3; attempt++) {
+            WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(removeBtn));
+            if (attempt == 1) {
+                btn.click();
+            } else {
+                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn);
+            }
+            try {
+                new WebDriverWait(driver, Duration.ofSeconds(3))
+                        .until(ExpectedConditions.invisibilityOfElementLocated(removeBtn));
+                return this;
+            } catch (TimeoutException dropped) {
+                // remove click swallowed in headless — retry via JS
+            }
+        }
+        throw new IllegalStateException("Could not remove item: " + slug);
     }
 
     public CartPage checkout() {
-        wait.until(ExpectedConditions.elementToBeClickable(CHECKOUT_BUTTON)).click();
-        return this;
+        for (int attempt = 1; attempt <= 3; attempt++) {
+            WebElement btn = wait.until(ExpectedConditions.elementToBeClickable(CHECKOUT_BUTTON));
+            if (attempt == 1) {
+                btn.click();
+            } else {
+                ((JavascriptExecutor) driver).executeScript("arguments[0].click();", btn);
+            }
+            try {
+                new WebDriverWait(driver, Duration.ofSeconds(3))
+                        .until(ExpectedConditions.urlContains("/checkout-step-one.html"));
+                return this;
+            } catch (TimeoutException dropped) {
+                // checkout click swallowed in headless — retry via JS
+            }
+        }
+        throw new IllegalStateException("Could not start checkout");
     }
 
     public CartPage continueShopping() {
