@@ -1,5 +1,7 @@
 # QA Engineer Portfolio
 
+**English** | [Azərbaycanca](./README.az.md)
+
 > End-to-end Quality Assurance portfolio demonstrating the **full QA lifecycle** on real-world e-commerce applications — from manual test design and bug reporting through API testing, database validation, and UI automation across multiple frameworks.
 
 [![Cypress E2E](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/cypress.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/cypress.yml)
