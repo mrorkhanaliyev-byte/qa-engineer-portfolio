@@ -6,19 +6,21 @@ node_modules/
 # CI's setup-node cache requires a lockfile to be tracked.)
 
 # Test artifacts
-cypress/videos/
-cypress/screenshots/
-cypress/reports/
-cypress/downloads/
+# NOTE: leading **/ so these match in nested section folders too
+# (e.g. 05-cypress-tests/cypress/reports/), not just the repo root.
+**/cypress/videos/
+**/cypress/screenshots/
+**/cypress/reports/
+**/cypress/downloads/
 playwright-report/
 test-results/
 .playwright-cache/
 blob-report/
 allure-results/
 allure-report/
-newman-reports/*.html
-newman-reports/*.json
-newman-reports/*.xml
+**/newman-reports/*.html
+**/newman-reports/*.json
+**/newman-reports/*.xml
 
 # Java / Maven
 target/
