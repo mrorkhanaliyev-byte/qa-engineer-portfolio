@@ -13,7 +13,7 @@
 | **Affects** | `POST https://api.demoblaze.com/login` (used by https://www.demoblaze.com/) |
 | **Environment** | API-level — reproducible with `curl`; browser-independent |
 | **Related TC** | [TC-LOGIN-005, TC-LOGIN-006](../test-cases/login-test-cases.csv) |
-| **Related** | Same class as [BUG-001](./BUG-001-login-error-message-leaks-user-existence.md) (Automation Exercise UI) — this one is at the **API** layer of a different site |
+| **Related** | Same class as [BUG-001](./BUG-001-signup-email-enumeration.md) (Automation Exercise signup UI) — this one is at the **API** layer of a different site |
 
 ## Summary
 

@@ -4,16 +4,16 @@
 
 > Real e-ticarət tətbiqləri üzərində **tam QA həyat dövrünü** nümayiş etdirən başdan-başa Keyfiyyət Təminatı portfeli — manual test dizaynı və bug hesabatlarından tutmuş API testləri, verilənlər bazası validasiyası və bir neçə framework üzərində UI avtomatlaşdırmasına qədər.
 
-[![Cypress E2E](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/cypress.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/cypress.yml)
-[![Playwright Cross-Browser](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/playwright.yml)
-[![Accessibility](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/accessibility.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/accessibility.yml)
-[![Newman API](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml)
-[![SQL Queries](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/sql.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/sql.yml)
-[![k6 Performance](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/k6.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/k6.yml)
-[![Selenium Java](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/selenium.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/selenium.yml)
+[![Cypress E2E](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/cypress.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/cypress.yml)
+[![Playwright Cross-Browser](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/playwright.yml)
+[![Accessibility](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/accessibility.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/accessibility.yml)
+[![Newman API](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/newman.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/newman.yml)
+[![SQL Queries](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/sql.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/sql.yml)
+[![k6 Performance](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/k6.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/k6.yml)
+[![Selenium Java](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/selenium.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/selenium.yml)
 [![GitLab CI](https://img.shields.io/badge/GitLab_CI-configured-FC6D26?logo=gitlab&logoColor=white)](https://gitlab.com/orkhanaliyev/qa-engineer-portfolio/-/blob/main/.gitlab-ci.yml)
 
-> İki yerdə hostlanır: **[GitHub](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio)** və **[GitLab](https://gitlab.com/orkhanaliyev/qa-engineer-portfolio)**. Bütün avtomatlaşdırılmış CI **GitHub Actions** üzərində işləyir (yeddi yol-əhatəli (path-scoped) workflow — brauzer E2E və headless Selenium daxil); manual-tetiklə işləyən **[`.gitlab-ci.yml`](./.gitlab-ci.yml)** isə sürətli headless suite-ləri (SQL, API, k6 smoke) GitLab CI-da güzgüləyir.
+> İki yerdə hostlanır: **[GitHub](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio)** və **[GitLab](https://gitlab.com/orkhanaliyev/qa-engineer-portfolio)**. Bütün avtomatlaşdırılmış CI **GitHub Actions** üzərində işləyir (yeddi yol-əhatəli (path-scoped) workflow — brauzer E2E və headless Selenium daxil); manual-tetiklə işləyən **[`.gitlab-ci.yml`](./.gitlab-ci.yml)** isə sürətli headless suite-ləri (SQL, API, k6 smoke) GitLab CI-da güzgüləyir.
 
 ![Manual Testing](https://img.shields.io/badge/Manual_Testing-✓-success)
 ![Jira](https://img.shields.io/badge/Jira-0052CC?logo=jira&logoColor=white)
@@ -87,7 +87,7 @@ Hər avtomatlaşdırma framework-unun öz qovluğunda quraşdırma təlimatları
 
 ```bash
 # Repozitoriyanı klonla
-git clone https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio.git
+git clone https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio.git
 cd qa-engineer-portfolio
 
 # Cypress testlərini işə sal
@@ -142,7 +142,7 @@ newman run collections/automation-exercise-api.postman_collection.json
 
 - 📧 mr.orkhan.aliyev@gmail.com
 - 💼 [LinkedIn](https://www.linkedin.com/in/orkhan-aliyev-qa/)
-- 🐙 [GitHub](https://github.com/mrorkhanaliyev-byte)
+- 🐙 [GitHub](https://github.com/orkhan-aliyev-qa)
 - 🦊 [GitLab](https://gitlab.com/orkhanaliyev)
 
 ---

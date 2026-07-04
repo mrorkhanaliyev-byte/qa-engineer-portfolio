@@ -65,7 +65,7 @@ Out of scope this cycle: full checkout/payment automation, performance/load, pen
 
 | ID | Title | Severity | Priority | Status |
 |---|---|---|---|---|
-| [BUG-001](./bug-reports/BUG-001-login-error-message-leaks-user-existence.md) | AE login error leaks email existence | Major | High | Open |
+| [BUG-001](./bug-reports/BUG-001-signup-email-enumeration.md) | AE signup form leaks email existence | Major | High | Open |
 | [BUG-002](./bug-reports/BUG-002-cart-quantity-resets-after-logout-login.md) | Cart lost after logout/login | Major | High | Open |
 | [BUG-003](./bug-reports/BUG-003-password-field-allows-html5-paste-without-trim.md) | Email not trimmed on paste → login fails | Minor | Medium | Open |
 | [BUG-004](./bug-reports/BUG-004-rabitabank-broken-navigation-links.md) | Rabitabank: 5 pages return 404 | Major | High | Open |

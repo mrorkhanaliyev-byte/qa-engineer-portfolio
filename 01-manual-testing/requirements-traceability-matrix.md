@@ -17,9 +17,9 @@ This RTM ties the **whole portfolio together**: manual test cases (`01`), API te
 | AUTH-01 | Login page/modal exposes email, password, submit | TC-LOGIN-001, TC-AE-LOGIN-001 | ✅ | ✅ | ✅ | — | — |
 | AUTH-02 | Valid credentials authenticate the user | TC-LOGIN-002/003, TC-AE-LOGIN-002/003 | ✅ | ✅ | ✅ | ✅ | — |
 | AUTH-03 | Invalid password is rejected | TC-LOGIN-005, TC-AE-LOGIN-004 | ✅ | ✅ | ✅ | ✅ | — |
-| AUTH-04 | Unknown user is rejected | TC-LOGIN-006, TC-AE-LOGIN-005 | ✅ | ✅ | ✅ | ✅ | **BUG-001, BUG-005** |
+| AUTH-04 | Unknown user is rejected | TC-LOGIN-006, TC-AE-LOGIN-005 | ✅ | ✅ | ✅ | ✅ | **BUG-005** |
 | AUTH-05 | Empty / malformed input is blocked | TC-LOGIN-004, TC-AE-LOGIN-006/007/008 | ✅ | ✅ | ✅ | ✅ | — |
-| AUTH-06 | Error messages must not leak account existence | TC-LOGIN-004 | ✅ | ✅ | — | ✅ | **BUG-001 (AE UI), BUG-005 (Demoblaze API)** |
+| AUTH-06 | Error messages must not leak account existence | TC-LOGIN-004, TC-REG-004 | ✅ | ✅ | — | ✅ | **BUG-001 (AE signup UI), BUG-005 (Demoblaze API)** — AE *login* verified clean |
 | AUTH-07 | Password field is masked | TC-AE-LOGIN-011 | ✅ | ✅ | — | — | — |
 | AUTH-08 | Email field trims whitespace on paste | (TC-LOGIN-013, proposed) | 🚧 | 🚧 | — | — | **BUG-003** |
 | AUTH-09 | Login form resists XSS / SQLi input | TC-LOGIN-011/012, TC-AE-LOGIN-012 | ✅ | ✅ | — | — | — |

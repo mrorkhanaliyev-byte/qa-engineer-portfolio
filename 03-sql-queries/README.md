@@ -2,7 +2,7 @@
 
 A working SQLite database, 19 hand-written queries, and a CI runner that proves each query returns exactly the result a QA engineer would expect. The whole section is reproducible from a clean checkout in under 5 seconds.
 
-[![SQL Queries](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/sql.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/sql.yml)
+[![SQL Queries](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/sql.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/sql.yml)
 
 ![SQLite](https://img.shields.io/badge/SQLite-003B57?logo=sqlite&logoColor=white)
 ![Python](https://img.shields.io/badge/Python-3.12-3776AB?logo=python&logoColor=white)

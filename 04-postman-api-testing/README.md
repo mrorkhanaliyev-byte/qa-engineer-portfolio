@@ -7,7 +7,7 @@ Two REST API test collections, run headlessly with Newman in CI:
 
 Testing both shows the same skills against two very different API contracts.
 
-[![Newman API](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml)
+[![Newman API](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/newman.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/newman.yml)
 
 ![Postman](https://img.shields.io/badge/Postman-FF6C37?logo=postman&logoColor=white)
 ![Newman](https://img.shields.io/badge/Newman-CLI-orange)

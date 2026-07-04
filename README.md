@@ -4,16 +4,16 @@
 
 > End-to-end Quality Assurance portfolio demonstrating the **full QA lifecycle** on real-world e-commerce applications — from manual test design and bug reporting through API testing, database validation, and UI automation across multiple frameworks.
 
-[![Cypress E2E](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/cypress.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/cypress.yml)
-[![Playwright Cross-Browser](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/playwright.yml)
-[![Accessibility](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/accessibility.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/accessibility.yml)
-[![Newman API](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/newman.yml)
-[![SQL Queries](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/sql.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/sql.yml)
-[![k6 Performance](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/k6.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/k6.yml)
-[![Selenium Java](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/selenium.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/selenium.yml)
+[![Cypress E2E](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/cypress.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/cypress.yml)
+[![Playwright Cross-Browser](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/playwright.yml)
+[![Accessibility](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/accessibility.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/accessibility.yml)
+[![Newman API](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/newman.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/newman.yml)
+[![SQL Queries](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/sql.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/sql.yml)
+[![k6 Performance](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/k6.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/k6.yml)
+[![Selenium Java](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/selenium.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/selenium.yml)
 [![GitLab CI](https://img.shields.io/badge/GitLab_CI-configured-FC6D26?logo=gitlab&logoColor=white)](https://gitlab.com/orkhanaliyev/qa-engineer-portfolio/-/blob/main/.gitlab-ci.yml)
 
-> Dual-hosted on **[GitHub](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio)** and **[GitLab](https://gitlab.com/orkhanaliyev/qa-engineer-portfolio)**. All automated CI runs on **GitHub Actions** (seven path-scoped workflows, incl. browser E2E and headless Selenium); a manual-trigger **[`.gitlab-ci.yml`](./.gitlab-ci.yml)** mirrors the fast headless suites (SQL, API, k6 smoke) on GitLab CI.
+> Dual-hosted on **[GitHub](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio)** and **[GitLab](https://gitlab.com/orkhanaliyev/qa-engineer-portfolio)**. All automated CI runs on **GitHub Actions** (seven path-scoped workflows, incl. browser E2E and headless Selenium); a manual-trigger **[`.gitlab-ci.yml`](./.gitlab-ci.yml)** mirrors the fast headless suites (SQL, API, k6 smoke) on GitLab CI.
 
 ![Manual Testing](https://img.shields.io/badge/Manual_Testing-✓-success)
 ![Jira](https://img.shields.io/badge/Jira-0052CC?logo=jira&logoColor=white)
@@ -87,7 +87,7 @@ Each automation framework has its own setup instructions in its folder. Quick st
 
 ```bash
 # Clone the repo
-git clone https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio.git
+git clone https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio.git
 cd qa-engineer-portfolio
 
 # Run Cypress tests
@@ -142,7 +142,7 @@ newman run collections/automation-exercise-api.postman_collection.json
 
 - 📧 mr.orkhan.aliyev@gmail.com
 - 💼 [LinkedIn](https://www.linkedin.com/in/orkhan-aliyev-qa/)
-- 🐙 [GitHub](https://github.com/mrorkhanaliyev-byte)
+- 🐙 [GitHub](https://github.com/orkhan-aliyev-qa)
 - 🦊 [GitLab](https://gitlab.com/orkhanaliyev)
 
 ---

@@ -175,4 +175,4 @@ Reviewed when tooling, scope, or risk profile changes. The portfolio grew from 5
 ---
 
 **Author:** Orkhan Aliyev — QA Engineer
-📧 mr.orkhan.aliyev@gmail.com · 💼 [LinkedIn](https://www.linkedin.com/in/orkhan-aliyev-qa/) · 🐙 [GitHub](https://github.com/mrorkhanaliyev-byte)
+📧 mr.orkhan.aliyev@gmail.com · 💼 [LinkedIn](https://www.linkedin.com/in/orkhan-aliyev-qa/) · 🐙 [GitHub](https://github.com/orkhan-aliyev-qa)

@@ -7,7 +7,7 @@ That's the point of this section: testing one API on **two axes**.
 > **Does it work?** → functional API tests (section 04)
 > **Does it hold up?** → performance tests (this section)
 
-[![k6 Performance](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/k6.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/k6.yml)
+[![k6 Performance](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/k6.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/k6.yml)
 
 ![k6](https://img.shields.io/badge/k6-7D64FF?logo=k6&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?logo=javascript&logoColor=black)

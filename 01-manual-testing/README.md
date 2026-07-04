@@ -25,8 +25,8 @@ This section contains the **foundation** of QA work — the artifacts a tester p
 
 | Module | Test Cases | Bugs Found |
 |---|---|---|
-| Login | 12 | 3 (BUG-001, BUG-003, BUG-005) |
-| Registration | 14 | — |
+| Login | 12 | 2 (BUG-003, BUG-005) |
+| Registration | 14 | 1 (BUG-001) |
 | Product Search | 12 | — |
 | Cart | 13 | 1 (BUG-002) |
 | Checkout | 14 | — |
@@ -38,7 +38,7 @@ This section contains the **foundation** of QA work — the artifacts a tester p
 
 | ID | Title | Severity | Type |
 |---|---|---|---|
-| [BUG-001](./bug-reports/BUG-001-login-error-message-leaks-user-existence.md) | AE login error leaks email existence | Major | Security |
+| [BUG-001](./bug-reports/BUG-001-signup-email-enumeration.md) | AE signup form leaks email existence | Major | Security |
 | [BUG-002](./bug-reports/BUG-002-cart-quantity-resets-after-logout-login.md) | Cart lost after logout/login | Major | Functional |
 | [BUG-003](./bug-reports/BUG-003-password-field-allows-html5-paste-without-trim.md) | Email not trimmed on paste → login fails | Minor | UX |
 | [BUG-004](./bug-reports/BUG-004-rabitabank-broken-navigation-links.md) | Rabitabank: 5 pages return HTTP 404 | Major | Broken links |

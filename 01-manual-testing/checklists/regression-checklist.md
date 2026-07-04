@@ -78,7 +78,7 @@
 
 ## 7. Known issues (re-verify each run)
 
-- [ ] **BUG-001** Login error message — still leaking user existence? *(if fixed, close ticket)*
+- [ ] **BUG-001** Signup form — still leaking email existence ("Email Address already exist!")? *(if fixed, close ticket)*
 - [ ] **BUG-002** Cart not persisted across logout/login? *(if fixed, close ticket)*
 - [ ] **BUG-003** Email field does not trim whitespace on paste? *(if fixed, close ticket)*
 

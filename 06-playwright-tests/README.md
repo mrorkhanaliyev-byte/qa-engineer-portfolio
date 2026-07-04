@@ -2,8 +2,8 @@
 
 Cross-browser end-to-end tests with **Playwright + TypeScript**, running on **Chromium, Firefox, and WebKit** in a CI matrix. Companion to the Cypress suite — same targets, different framework, different language.
 
-[![Playwright Cross-Browser](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/playwright.yml)
-[![Accessibility](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/accessibility.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/accessibility.yml)
+[![Playwright Cross-Browser](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/playwright.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/playwright.yml)
+[![Accessibility](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/accessibility.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/accessibility.yml)
 
 ![Playwright](https://img.shields.io/badge/Playwright-1.48-2EAD33?logo=playwright&logoColor=white)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5.4-3178C6?logo=typescript&logoColor=white)

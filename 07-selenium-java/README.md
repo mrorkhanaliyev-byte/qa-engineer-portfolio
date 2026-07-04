@@ -2,7 +2,7 @@
 
 A test automation framework built with **Selenium 4 + Java 17 + TestNG + Maven**, mirroring the same flows as the Cypress (`05-`) and Playwright (`06-`) suites so the *same intent* can be read side-by-side in three languages. Headless-Chrome CI runs on every push.
 
-[![Selenium Java](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/selenium.yml/badge.svg)](https://github.com/mrorkhanaliyev-byte/qa-engineer-portfolio/actions/workflows/selenium.yml)
+[![Selenium Java](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/selenium.yml/badge.svg)](https://github.com/orkhan-aliyev-qa/qa-engineer-portfolio/actions/workflows/selenium.yml)
 ![Selenium](https://img.shields.io/badge/Selenium-4.25-43B02A?logo=selenium&logoColor=white)
 ![Java](https://img.shields.io/badge/Java-17-ED8B00?logo=openjdk&logoColor=white)
 ![TestNG](https://img.shields.io/badge/TestNG-7.10-EE0000)
